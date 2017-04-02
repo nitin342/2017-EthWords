@@ -1,5 +1,7 @@
 pragma solidity ^0.4.0;
+
 contract HashWallet {
+
   struct Wallet{
     address Owner;
     uint balance;
