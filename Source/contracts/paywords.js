@@ -1,12 +1,13 @@
 var sha3 = require('./sha3');
 
 console.log("\nThe payword (password to remember) is:");
-var payword = '0xc0ffee';
+var payword = 'MySecret'; //easy to remember
 console.log(payword);
 
 console.log("\nThe paywords from 100 to 1 are:");
-var hashScratch = payword;
-for(var i = 0; i < 100; i++) {
+var hashScratch = sha3(payword);
+console.log(100,hashScratch);
+for(var i = 1; i < 100; i++) {
   hashScratch = sha3(hashScratch, {encoding: 'hex'});
   console.log(100-i,hashScratch);
 }
