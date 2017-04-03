@@ -9,6 +9,7 @@ contract EthWords {
   uint expirationTime;
   uint wordValue;
   bytes32 root;
+  uint balance;
 
   //State Machine
   enum States {Init,Open}
@@ -45,15 +46,17 @@ contract EthWords {
 
   //Open payment function
 
-  function open(address rec, uint validityTime, uint wv, bytes32 rt)
+  function open(address rec, uint validityTime, uint wv, uint nw, bytes32 rt)
     payable
     checkOwner
     checkState(States.Init)
   {
+    if (msg.value != wv * nw) throw;
     receiver = rec;
     expirationTime = now + validityTime;
     wordValue = wv;
     root = rt;
+    balance = msg.value;
     state = States.Open;
   }
 
