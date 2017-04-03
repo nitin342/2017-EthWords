@@ -43,20 +43,26 @@ contract EthWords {
     state = States.Init;
   }
 
-  //Open payment function
+  /**
+  * @dev Specifies and opens the payment channel
+  * @param _receiver Receiver's address
+  * @param _validityTime Amount of time (in minutes) before Owner can claim
+  * @param _wordValue Amount of Eth (in wei) each payword is worth
+  * @param _wordRoot Root word for the paywords
+  */
 
   //function open(address rec, uint validityTime, uint wv, uint nw, bytes32 rt)
-  function open(address rec, uint validityTime, uint wv, bytes32 rt)
+  function open(address _receiver, uint _validityTime, uint _wordValue, bytes32 _wordRoot)
     payable
     checkOwner
     checkState(States.Init)
   {
     //This line is buggy, I think msg.value doesn't return what we think
     //if (msg.value != wv * nw) throw;
-    receiver = rec;
-    expirationTime = now + validityTime;
-    wordValue = wv;
-    root = rt;
+    receiver = _receiver;
+    expirationTime = now + _validityTime * 1 minutes;
+    wordValue = _wordValue;
+    root = _wordRoot;
     //balance = msg.value;
     state = States.Open;
   }
