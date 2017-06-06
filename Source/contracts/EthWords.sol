@@ -12,25 +12,28 @@ contract EthWords {
   //uint public balance; //Not sure we need this: will discuss
 
   //State Machine
-  enum States {Init,Open}
+  enum States {Init,Open,Locked}
   States public state;
 
-  //Checks as Modifiers
+  //Check sender is owner
   modifier checkOwner(){
     if (msg.sender != owner) throw;
     _;
   }
 
+  //Check sender is receiver
   modifier checkReceiver() {
     if (msg.sender != receiver) throw;
     _;
   }
 
+  //Check that contract has been expired
   modifier checkTime() {
     if (now < expirationTime) throw;
     _;
   }
 
+  //Check that the state of the state machine
   modifier checkState(States _state) {
     if (state != _state) throw;
     _;
@@ -51,53 +54,81 @@ contract EthWords {
   * @param _wordRoot Root word for the paywords
   */
 
-  //function open(address rec, uint validityTime, uint wv, uint nw, bytes32 rt)
   function open(address _receiver, uint _validityTime, uint _wordValue, bytes32 _wordRoot)
     payable
     checkOwner
     checkState(States.Init)
   {
-    //This line is buggy, I think msg.value doesn't return what we think
-    //if (msg.value != wv * nw) throw;
     receiver = _receiver;
     expirationTime = now + _validityTime * 1 minutes;
     wordValue = _wordValue;
     root = _wordRoot;
-    //balance = msg.value;
     state = States.Open;
   }
 
-  //Claim function
+  /**
+  * @dev A function allowing receiver to claim payment
+  * @param _word The receiver's payword
+  * @param _wordCount The receiver's assertion of what the payword is worth
+  */
 
-  function claim(bytes32 word, uint wordCount)
+  function claim(bytes32 _word, uint _wordCount)
     checkReceiver
     checkState(States.Open)
   {
-    bytes32 wordScratch = word;
+    // Lock the state to prevent reentrance
+    state = States.Locked;
 
-    for (uint i = 1; i <= wordCount; i++){
+    // Compute the hashchain to get the root
+    bytes32 wordScratch = _word;
+    for (uint i = 1; i <= _wordCount; i++){
       wordScratch = sha3(wordScratch);
     }
 
-    if(wordScratch != root) throw;
-
-    if (msg.sender.send(wordCount * wordValue)) {
-      selfdestruct(owner);
+    // Check if root is correct
+    if(wordScratch != root) {
+      state = States.Open;
+      throw;
     }
+
+    // If reached, root is correct so pay the two parties
+    if (msg.sender.send(_wordCount * wordValue)) {
+      selfdestruct(owner);
+     }
+
+    // If send fails, unlock the function for future calls
+    state = States.Open;
 
   }
 
-  //Refund function valid after timelock
+  /**
+  * @dev A function to extend the validity of the contract
+  * @param _validityTime Time (minutes) to extend the validity period by
+  */
+
+  function renew(uint _validityTime)
+    checkOwner
+    checkState(States.Open)
+    {
+      expirationTime += _validityTime * 1 minutes;
+    }
+
+  /**
+  * @dev Refund the contract to the owner after validty period is expired
+  */
+
   function refund()
     checkOwner
     checkTime
     checkState(States.Open)
-  {
-    selfdestruct(owner);
-  }
+    {
+      selfdestruct(owner);
+    }
 
-  //Fallback function allows payments to contract any time
+  /**
+  * @dev Fallback function allows payment at any time
+  */
+
   function() payable { }
-
 
 }
