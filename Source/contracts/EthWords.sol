@@ -13,7 +13,7 @@ contract EthWords {
 
   //State Machine
   enum States {Init,Open,Locked}
-  States public state;
+  States state; // if state is public, reentry could reset it
 
   //Check sender is owner
   modifier checkOwner(){

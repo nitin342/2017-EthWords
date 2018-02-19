@@ -1,0 +1,85 @@
+% !TEX root = ../main.tex
+
+% = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+% = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+
+\section{Introduction}
+
+Beginning in the 1980s, a significant amount of the cryptographic literature has been devoted to the design of e-cash systems. In the 1990s, many startups worked toward deployment of this technology but most ultimately failed [cite textbook]. By late 2008, when Bitcoin was first proposed, innovation on both the academic and commercial side of digital cash had dried up. Now Bitcoin's success has breathed new life into the field: cryptocurrencies have billion dollar market capitalizations and academic conferences like \textit{Financial Cryptography} are again publishing papers on financial cryptography. 
+
+At first glance, Bitcoin seems like a major departure from the e-cash systems on the 80s and 90s. In reality, it's `academic pedigree' is built from existing ideas [c]. Researchers are re-discovering long lost ideas from the e-cash literature and finding new ways to apply them in a blockchain world. For example, blinded coins were a staple of e-cash [c] that re-emerge in systems like zcash [c,c]. Enabling micropayments through lottery-based probablistic payments of macropayments    was explored in the 90s [c] and re-emerged for Bitcoin [c]. In this paper, we `re-discover' the 1997 payment system \pw from Rivest and Shamir [c]. 
+
+\pw is a credit-based payment system, envisioned for small payments. The mechanics we will turn to later, but for now, the reader can think of tokens being issued that have some value. The key limitation of \pw is that tokens do not have inherent value; their value is based on the trust assumption that a counter-party will honour the value ascribed to them. With Ethereum and other blockchain technologies, we can fix this issue by stapling cryptocurrency to the token through the use of a smart contract. 
+
+This transformation turns \pw from a trust-based credit system to a escrow-based payment system; not unlike offline payment channels and networks being proposed for Bitcoin --- the Lightning Network being the most prominent [c]. After presenting our system, \ew, we discuss its relation to payment channels. It is known that an Ethereum-based payment channel will be less complex than a Bitcoin one, since most of the complexity of Bitcoin-based payments channels (\eg a [c]) comes from Bitcoin's limited scripting language. \ew a uni-directional (monotonic) payment channel that can be chained into a payment network and has very compact (\eg 112-bit) payments. It thus might be an interesting primitive to enhance in the same ways other payment channels have been: adding duplex / bi-directionality [c,c], increasing efficiency [c,], and adding transactional privacy[c,].
+
+% = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+% = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+
+\section{Payword Primer}
+
+\pw relies on hash chains. A hash chain is constructed by iteratively applying a public one-way hash function $h(.)$ on a random seed value $s$. To create a hash chain of length $N$, one first selects the seed value $s$, then repeatedly applies $h(.)$ on $s$ for $N$ times, thus resulting in a sequence of $N$ hashes:
+\[h^N(s), h^{N-1}(s), h^{N-2}(s), \cdots, h^2(s), h(s),s \]
+where $h^N(s)$ is called the tip of the chain and can be considered as the public key in a public key cryptosystem, and $s$ is also referred to by $h^0(s)$. More precisely, because of the preimage resistance of one way hash functions, knowing $h^N(s)$ does not reveal the value of $s$ or any of the previous hashes $h^{N-i}(s)$, $i=1,2,\cdots,N-1$. On the other hand, by knowing $s$ or any intermediate hash, one can easily verify the correctness of any successive hash values.
+
+In Payword micropayment scheme, a hash chain is used as follows; the tip $h^N(s)$ is first committed by a customer by digitally signing it such that a merchant can verify this signature. Then, for each successive payment, the customer release a previous hash from the chain which can be verified by the merchant that it hashes to $h^N(s)$. Accordingly, a merchant can aggregate such individual $i$ payments and cash one equivalent larger payment by releasing $h^{N-i}(s)$ to the merchant's financial authority which can verify if it hashes iteratively for $i$ times to $h^N(s)$. The customer may use up to $N$ equivalent payments until the seed value $s$ is used. At this time the hash chain is said to be exhausted and the whole process should be re-initialized again with a different seed value. 
+
+% = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+% = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+
+\section{\ew}
+
+\ew is an Ethereum-based smart contract that enables the aggregation of an offchain set of small payments to one or more onchain larger transactions. Particularly, our contract implements a smart contract moderated version of the Payword micropayment protocol and mediates the interaction between a customer $C$ and a merchant $M$. A pseudocode for the proposed smart contract is shown in Figure \ref{fig.contract}. 
+
+%\begin{figure}[!th]
+%	\centering
+%	\includegraphics[scale=0.7]{pics/contract.png}
+%	\caption{A pseudocode for the proposed \ew smart contract.}
+%	\label{fig.contract}
+%\end{figure} 
+
+EthWord is designed with two main functions that mediate the transaction process between $C$ and $M$. First, the contract is instantiated by $C$ through calling the \texttt{open} function. In this function, $C$ initializes the contract through passing the pseudonym of the merchant's account $M$, the tip of the hash chain $\_root$ so that the contract can verify released intermediate hash values against it, the amount that each released hash value is worth $\_wordvalue$, and the total amount of the whole hash chain $\_balance$, and $T_{end}$ which is the time after which remaining funds in the contact's balance are refunded to the customer's account. After calling the \texttt{open} function, both the contract and merchant can evaluate the length of the chain and, thus, $M$ can offline know how many intermediate hash values she can accept from $C$ without the need to constantly monitor the state of the contract. Also, $M$ knows that she has to claim aggregated payments before $T_{end}$ or else, $M$ can refund the contract's available balance.
+
+\subsection{Claiming aggregated payments} 
+
+For each payment in the form of an intermediate hash $x=h^i(s)$, $i=1,2,\cdots,N-1$ that $M$ receives from $C$, she can verify its validity offline by evaluating if $h^{(N-i)}(x) = h^N(s)$ or not. Accordingly, $M$ can decide whether to accept the transaction or decline it in the event of a failed verification. After a few micropayments, where $M$ has acquired a set of intermediate hashes, she invokes the \texttt{claim} function in the smart contract by passing to it the last received hash value $wordScratch$, and its order within the hash chain $n$. Consequently, the contract verifies the validity and the required balance of the supplied inputs against the stored hash chain parameters, and upon successful verification, the account of $M$ is credited by the resulting balance.
+
+\subsection{Payment networks} 
+
+\subsection{Efficiency}
+
+\subsection{Security}
+
+EthWord smart contract provides the following guaranteed security properties:
+\begin{itemize}
+	\item Fair exchange of services:
+	\item Conducting irrefutable transactions without blockchain monitoring:
+\end{itemize}
+
+% = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+% = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+
+\section{Relation to Payment Channels}
+
+% = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+% = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+
+\section{Discussion}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

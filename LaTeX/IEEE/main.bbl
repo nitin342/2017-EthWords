@@ -1,0 +1,209 @@
+\begin{thebibliography}{10}
+
+\bibitem{AKRSC13}
+E.~Androulaki, G.~O. Karame, M.~Roeschlin, T.~Scherer, and S.~Capkun.
+\newblock {Evaluating User Privacy in Bitcoin}.
+\newblock In {\em Financial Cryptography}, 2013.
+
+\bibitem{AFGH+08}
+K.~J. Arrow, R.~Forsythe, M.~Gorham, R.~Hahn, R.~Hanson, J.~O. Ledyard,
+  S.~Levmore, R.~Litan, P.~Milgrom, F.~D. Nelson, G.~R. Neumann, M.~Ottaviani,
+  T.~C. Schelling, R.~J. Shiller, V.~L. Smith, E.~Snowberg, C.~R. Sunstein,
+  P.~C. Tetlock, P.~E. Tetlock, H.~R. Varian, J.~Wolfers, and E.~Zitzewitz.
+\newblock The promise of prediction markets.
+\newblock {\em Science}, 320(5878), 2008.
+
+\bibitem{ANL00}
+T.~Aura, P.~Nikander, and J.~Leiwo.
+\newblock {DoS}-resistant authentication with client puzzles.
+\newblock In {\em Security Protocols}, 2000.
+
+\bibitem{Back02}
+A.~Back.
+\newblock Hashcash: a denial of service counter-measure, 2002.
+
+\bibitem{BMC+15}
+J.~Bonneau, A.~Miller, J.~Clark, A.~Narayanan, J.~Kroll, and E.~Felten.
+\newblock Bitcoin and second-generation cryptocurrencies.
+\newblock In {\em {IEEE Symposium on Security and Privacy}}, 2015.
+
+\bibitem{BNMC+14}
+J.~Bonneau, A.~Narayanan, A.~Miller, J.~Clark, J.~A. Kroll, and E.~W. Felten.
+\newblock Mixcoin: Anonymity for bitcoin with accountable mixes.
+\newblock In {\em Financial Cryptography}, 2014.
+
+\bibitem{Bro13}
+J.~Brown.
+\newblock {Betting Markets with Decentralized Resolution and Persistent
+  Reputation using Electronic Cash}.
+\newblock private communication, Dec. 2013.
+
+\bibitem{Cha82}
+D.~Chaum.
+\newblock {Blind signatures for untraceable payments}.
+\newblock In {\em {CRYPTO}}, 1982.
+
+\bibitem{CP10}
+Y.~Chen and D.~M. Pennock.
+\newblock Designing markets for prediction.
+\newblock {\em AI Magazine}, 2010.
+
+\bibitem{CBN+14}
+J.~Clark, J.~Bonneau, A.~Miller, J.~A. Kroll, E.~W. Felten, and A.~Narayanan.
+\newblock On decentralizing prediction markets and order books.
+\newblock In {\em WEIS}, 2014.
+
+\bibitem{CE12}
+J.~Clark and A.~Essex.
+\newblock Commitcoin: Carbon dating commitments with bitcoin.
+\newblock In {\em Financial Cryptography}, 2012.
+
+\bibitem{DBBCB15}
+G.~G. Dagher, B.~Buenz, J.~Bonneau, J.~Clark, and D.~Boneh.
+\newblock {Provisions: Privacy-preserving proofs of solvency for Bitcoin
+  exchanges}.
+\newblock In {\em CCS '15: Proceedings of the 22\textsuperscript{nd} ACM
+  Conference on Computer and Communications Security}, October 2015.
+
+\bibitem{Cre01}
+G.~Di~Crescenzo.
+\newblock Privacy for the stock market.
+\newblock In {\em Financial Cryptography}, 2001.
+
+\bibitem{DSS06}
+R.~Dingledine, A.~Serjantov, and P.~Syverson.
+\newblock Blending different latency traffic with alpha-mixing.
+\newblock In {\em Privacy Enhancing Technologies}, pages 245--257. Springer,
+  2006.
+
+\bibitem{DN93}
+C.~Dwork and M.~Naor.
+\newblock Pricing via processing or combatting junk mail.
+\newblock In {\em CRYPTO}, 1992.
+
+\bibitem{EBSC15}
+S.~Eskandari, D.~Barrera, E.~Stobert, and J.~Clark.
+\newblock A first look at the usability of {B}itcoin key management.
+\newblock In {\em USEC}, 2015.
+
+\bibitem{GJMM98}
+E.~Gabber, M.~Jakobsson, Y.~Matias, and A.~Mayer.
+\newblock Curbing junk e-mail via secure classification.
+\newblock In {\em Financial Cryptography}, 1998.
+
+\bibitem{HS90}
+S.~Haber and W.~S. Stornetta.
+\newblock How to time-stamp a digital document.
+\newblock In {\em CRYPTO}, 1990.
+
+\bibitem{HS97}
+S.~A. Haber and W.~S. Stornetta.
+\newblock Secure names for bit-strings.
+\newblock In {\em CCS}, 1997.
+
+\bibitem{Han03}
+R.~Hanson.
+\newblock Combinatorial information market design.
+\newblock {\em Information Systems Frontiers}, 5(1), 2003.
+
+\bibitem{Har03}
+L.~Harris.
+\newblock {\em Trading and exchanges: market microstructure for practitioners}.
+\newblock Oxford, 2003.
+
+\bibitem{JJ99}
+M.~Jakobsson and A.~Juels.
+\newblock Proofs of work and bread pudding protocols.
+\newblock In {\em Communications and Multimedia Security}, 1999.
+
+\bibitem{JB99}
+A.~Juels and J.~Brainard.
+\newblock Client puzzles: A cryptographic defense against connection depletion
+  attacks.
+\newblock In {\em NDSS}, 1999.
+
+\bibitem{MPJL+13}
+S.~Meiklejohn, M.~Pomarole, G.~Jordan, K.~Levchenko, D.~McCoy, G.~M. Voelker,
+  and S.~Savage.
+\newblock {A fistful of bitcoins: characterizing payments among men with no
+  names}.
+\newblock In {\em {IMC}}, 2013.
+
+\bibitem{MGGR13}
+I.~Miers, C.~Garman, M.~Green, and A.~D. Rubin.
+\newblock {Zerocoin: Anonymous Distributed E-Cash from Bitcoin}.
+\newblock In {\em {IEEE Symposium on Security and Privacy}}, 2013.
+
+\bibitem{Nak08}
+S.~Nakamoto.
+\newblock Bitcoin: A peer-to-peer electionic cash system.
+\newblock Unpublished, 2008.
+
+\bibitem{NBFMG16}
+A.~Narayanan, J.~Bonneau, E.~W. Felten, A.~Miller, and S.~Goldfeder.
+\newblock {\em Bitcoin and Cryptocurrency Technologies}.
+\newblock Princeton, 2016.
+
+\bibitem{RH13}
+F.~Reid and M.~Harrigan.
+\newblock {An analysis of anonymity in the bitcoin system}.
+\newblock In {\em {Security and Privacy in Social Networks}}, 2013.
+
+\bibitem{RS96}
+R.~L. Rivest and A.~Shamir.
+\newblock {PayWord} and {MicroMint}: two simple micropayment schemes.
+\newblock In {\em Security Protocols}, 1996.
+
+\bibitem{RSW96}
+R.~L. Rivest, A.~Shamir, and D.~A. Wagner.
+\newblock Time-lock puzzles and timed-release crypto.
+\newblock Technical Report TR-684, MIT, 1996.
+
+\bibitem{RS13}
+D.~Ron and A.~Shamir.
+\newblock {Quantitative Analysis of the Full Bitcoin Transaction Graph}.
+\newblock In {\em Financial Cryptography}, 2013.
+
+\bibitem{SD03}
+A.~Serjantov and G.~Danezis.
+\newblock Towards an information theoretic metric for anonymity.
+\newblock In {\em Privacy Enhancing Technologies}, pages 41--53. Springer,
+  2003.
+
+\bibitem{SDS03}
+A.~Serjantov, R.~Dingledine, and P.~Syverson.
+\newblock From a trickle to a flood: Active attacks on several mix types.
+\newblock In {\em Information Hiding}, pages 36--52. Springer, 2003.
+
+\bibitem{TP07}
+C.~Thorpe and D.~C. Parkes.
+\newblock Cryptographic securities exchanges.
+\newblock In {\em Financial Cryptography}, 2007.
+
+\bibitem{TW12}
+C.~Thorpe and S.~R. Willis.
+\newblock Cryptographic rule-based trading.
+\newblock In {\em Financial Cryptography}, 2012.
+
+\bibitem{WZ04}
+J.~Wolfers and E.~Zitzewitz.
+\newblock Prediction markets.
+\newblock {\em Journal of Economic Perspective}, 2004.
+
+\bibitem{WZ06}
+J.~Wolfers and E.~Zitzewitz.
+\newblock Interpreting prediction market prices as probabilities.
+\newblock Technical Report 12200, NBER Working Paper, 2006.
+
+\bibitem{Yeh06}
+P.~F. Yeh.
+\newblock Using prediction markets to enhance us intelligence capabilities: A
+  ``standard \& poors 500 index'' for intelligence.
+\newblock {\em Studies in Intelligence}, 50(4), 2006.
+
+\bibitem{YSLT10}
+W.~Yuen, P.~Syverson, Z.~Liu, and C.~Thorpe.
+\newblock Intention-disguised algorithmic trading.
+\newblock In {\em Financial Cryptography}, 2010.
+
+\end{thebibliography}
