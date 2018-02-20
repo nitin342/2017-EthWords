@@ -2,8 +2,8 @@
 
 \bibitem{Cha82}
 D.~Chaum.
-\newblock {Blind signatures for untraceable payments}.
-\newblock In {\em {CRYPTO}}, 1982.
+\newblock Blind signatures for untraceable payments.
+\newblock In {\em CRYPTO}, 1982.
 
 \bibitem{DW15}
 C.~Decker and R.~Wattenhofer.
@@ -41,10 +41,15 @@ G.~Malavolta, P.~Moreno-Sanchez, A.~Kate, M.~Maffei, and S.~Ravi.
 \newblock Concurrency and privacy with payment-channel networks.
 \newblock In {\em CCS}, 2017.
 
+\bibitem{MMSH16}
+P.~McCorry, M.~M{\"o}ser, S.~F. Shahandasti, and F.~Hao.
+\newblock Towards bitcoin payment networks.
+\newblock In {\em Information Security and Privacy}, 2016.
+
 \bibitem{MGGR13}
 I.~Miers, C.~Garman, M.~Green, and A.~D. Rubin.
 \newblock {Zerocoin: Anonymous Distributed E-Cash from Bitcoin}.
-\newblock In {\em {IEEE Symposium on Security and Privacy}}, 2013.
+\newblock In {\em IEEE Symposium on Security and Privacy}, 2013.
 
 \bibitem{MBKM17}
 A.~Miller, I.~Bentov, R.~Kumaresan, and P.~McCorry.
