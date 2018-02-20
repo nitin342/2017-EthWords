@@ -62,8 +62,13 @@ J.~Clark and A.~Essex.
 G.~G. Dagher, B.~Buenz, J.~Bonneau, J.~Clark, and D.~Boneh.
 \newblock {Provisions: Privacy-preserving proofs of solvency for Bitcoin
   exchanges}.
-\newblock In {\em CCS '15: Proceedings of the 22\textsuperscript{nd} ACM
-  Conference on Computer and Communications Security}, October 2015.
+\newblock In {\em CCS}, October 2015.
+
+\bibitem{DW15}
+C.~Decker and R.~Wattenhofer.
+\newblock A fast and scalable payment network with bitcoin duplex micropayment
+  channels.
+\newblock In {\em SSS}, 2015.
 
 \bibitem{Cre01}
 G.~Di~Crescenzo.
@@ -81,6 +86,11 @@ C.~Dwork and M.~Naor.
 \newblock Pricing via processing or combatting junk mail.
 \newblock In {\em CRYPTO}, 1992.
 
+\bibitem{DEFM17}
+S.~Dziembowski, L.~Eckey, S.~Faust, and D.~Malinowski.
+\newblock Perun: Virtual payment channels over cryptographic currencies.
+\newblock IACR ePrint, 2017.
+
 \bibitem{EBSC15}
 S.~Eskandari, D.~Barrera, E.~Stobert, and J.~Clark.
 \newblock A first look at the usability of {B}itcoin key management.
@@ -90,6 +100,11 @@ S.~Eskandari, D.~Barrera, E.~Stobert, and J.~Clark.
 E.~Gabber, M.~Jakobsson, Y.~Matias, and A.~Mayer.
 \newblock Curbing junk e-mail via secure classification.
 \newblock In {\em Financial Cryptography}, 1998.
+
+\bibitem{GM17}
+M.~Green and I.~Miers.
+\newblock Bolt: Anonymous payment channels for decentralized currencies.
+\newblock In {\em CCS}, 2017.
 
 \bibitem{HS90}
 S.~Haber and W.~S. Stornetta.
@@ -111,16 +126,36 @@ L.~Harris.
 \newblock {\em Trading and exchanges: market microstructure for practitioners}.
 \newblock Oxford, 2003.
 
+\bibitem{HAB+17}
+E.~Heilman, L.~Alshenibr, F.~Baldimtsi, A.~Scafuro, and S.~Goldberg.
+\newblock Tumblebit: An untrusted bitcoin-compatible anonymous payment hub.
+\newblock In {\em NDSS}, 2017.
+
 \bibitem{JJ99}
 M.~Jakobsson and A.~Juels.
 \newblock Proofs of work and bread pudding protocols.
 \newblock In {\em Communications and Multimedia Security}, 1999.
+
+\bibitem{JaOd97}
+S.~Jarecki and A.~Odlyzko.
+\newblock An efficient micropayment system based on probabilistic polling.
+\newblock In {\em Financial Cryptography}, 1997.
 
 \bibitem{JB99}
 A.~Juels and J.~Brainard.
 \newblock Client puzzles: A cryptographic defense against connection depletion
   attacks.
 \newblock In {\em NDSS}, 1999.
+
+\bibitem{KG17}
+R.~Khalil and A.~Gervais.
+\newblock Revive: Rebalancing off-blockchain payment networks.
+\newblock In {\em CCS}, 2017.
+
+\bibitem{MMK+17}
+G.~Malavolta, P.~Moreno-Sanchez, A.~Kate, M.~Maffei, and S.~Ravi.
+\newblock Concurrency and privacy with payment-channel networks.
+\newblock In {\em CCS}, 2017.
 
 \bibitem{MPJL+13}
 S.~Meiklejohn, M.~Pomarole, G.~Jordan, K.~Levchenko, D.~McCoy, G.~M. Voelker,
@@ -129,10 +164,20 @@ S.~Meiklejohn, M.~Pomarole, G.~Jordan, K.~Levchenko, D.~McCoy, G.~M. Voelker,
   names}.
 \newblock In {\em {IMC}}, 2013.
 
+\bibitem{MiRi02}
+S.~Micali and R.~L. Rivest.
+\newblock Micropayments revisited.
+\newblock In {\em CT-RSA}, 2002.
+
 \bibitem{MGGR13}
 I.~Miers, C.~Garman, M.~Green, and A.~D. Rubin.
 \newblock {Zerocoin: Anonymous Distributed E-Cash from Bitcoin}.
 \newblock In {\em {IEEE Symposium on Security and Privacy}}, 2013.
+
+\bibitem{MBKM17}
+A.~Miller, I.~Bentov, R.~Kumaresan, and P.~McCorry.
+\newblock Sprites: Payment channels that go faster than lightning.
+\newblock {\em CoRR}, abs/1702.05812, 2017.
 
 \bibitem{Nak08}
 S.~Nakamoto.
@@ -144,10 +189,30 @@ A.~Narayanan, J.~Bonneau, E.~W. Felten, A.~Miller, and S.~Goldfeder.
 \newblock {\em Bitcoin and Cryptocurrency Technologies}.
 \newblock Princeton, 2016.
 
+\bibitem{NaCl17}
+A.~Narayanan and J.~Clark.
+\newblock Bitcoin's academic pedigree.
+\newblock {\em CACM}, 60(12), 2017.
+
+\bibitem{Pash15}
+R.~Pass and a.~shelat.
+\newblock Micropayments for decentralized currencies.
+\newblock In {\em CCS}, 2015.
+
+\bibitem{PD15}
+J.~Poon and T.~Dryja.
+\newblock The bitcoin lightning network: Scalable off-chain instant payments,
+  2015.
+
 \bibitem{RH13}
 F.~Reid and M.~Harrigan.
 \newblock {An analysis of anonymity in the bitcoin system}.
 \newblock In {\em {Security and Privacy in Social Networks}}, 2013.
+
+\bibitem{Riv97}
+R.~L. Rivest.
+\newblock Electronic lottery tickets as micropayments.
+\newblock In {\em Financial Cryptography}, 1997.
 
 \bibitem{RS96}
 R.~L. Rivest and A.~Shamir.
@@ -163,6 +228,23 @@ R.~L. Rivest, A.~Shamir, and D.~A. Wagner.
 D.~Ron and A.~Shamir.
 \newblock {Quantitative Analysis of the Full Bitcoin Transaction Graph}.
 \newblock In {\em Financial Cryptography}, 2013.
+
+\bibitem{RMKG18}
+S.~Roos, P.~Moreno{-}Sanchez, A.~Kate, and I.~Goldberg.
+\newblock Settling payments fast and private: Efficient decentralized routing
+  for path-based transactions.
+\newblock In {\em NDSS}, 2018.
+
+\bibitem{SaTa99}
+T.~Sander and A.~Ta-Shma.
+\newblock Auditable, anonymous electronic cash.
+\newblock In {\em CRYPTO}, 1999.
+
+\bibitem{SCG+14}
+E.~B. Sasson, A.~Chiesa, C.~Garman, M.~Green, I.~Miers, E.~Tromer, and
+  M.~Virza.
+\newblock Zerocash: Decentralized anonymous payments from bitcoin.
+\newblock In {\em IEEE Symposium on Security and Privacy}, 2014.
 
 \bibitem{SD03}
 A.~Serjantov and G.~Danezis.
@@ -184,6 +266,11 @@ C.~Thorpe and D.~C. Parkes.
 C.~Thorpe and S.~R. Willis.
 \newblock Cryptographic rule-based trading.
 \newblock In {\em Financial Cryptography}, 2012.
+
+\bibitem{Whe97}
+D.~Wheeler.
+\newblock Transactions using bets.
+\newblock In {\em Security Protocols}, 1997.
 
 \bibitem{WZ04}
 J.~Wolfers and E.~Zitzewitz.
