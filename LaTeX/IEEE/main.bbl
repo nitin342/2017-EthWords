@@ -1,5 +1,10 @@
 \begin{thebibliography}{10}
 
+\bibitem{ABC+98}
+R.~Anderson, F.~Bergadano, B.~Crispo, J.-H. Lee, C.~Manifavas, and R.~Needham.
+\newblock A new family of authentication protocols.
+\newblock {\em SIGOPS Oper. Syst. Rev.}, 32(4), 1998.
+
 \bibitem{Cha82}
 D.~Chaum.
 \newblock Blind signatures for untraceable payments.
@@ -10,6 +15,11 @@ C.~Decker and R.~Wattenhofer.
 \newblock A fast and scalable payment network with bitcoin duplex micropayment
   channels.
 \newblock In {\em SSS}, 2015.
+
+\bibitem{DF17}
+M.~Di~Ferrante.
+\newblock Ethereum payment channel in 50 lines of code.
+\newblock Medium, June 2017.
 
 \bibitem{DEFM17}
 S.~Dziembowski, L.~Eckey, S.~Faust, and D.~Malinowski.
@@ -35,6 +45,11 @@ S.~Jarecki and A.~Odlyzko.
 R.~Khalil and A.~Gervais.
 \newblock Revive: Rebalancing off-blockchain payment networks.
 \newblock In {\em CCS}, 2017.
+
+\bibitem{Lam81}
+L.~Lamport.
+\newblock Password authentication with insecure communication.
+\newblock {\em CACM}, 24(11), 1981.
 
 \bibitem{MMK+17}
 G.~Malavolta, P.~Moreno-Sanchez, A.~Kate, M.~Maffei, and S.~Ravi.
