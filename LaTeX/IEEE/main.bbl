@@ -5,6 +5,11 @@ R.~Anderson, F.~Bergadano, B.~Crispo, J.-H. Lee, C.~Manifavas, and R.~Needham.
 \newblock A new family of authentication protocols.
 \newblock {\em SIGOPS Oper. Syst. Rev.}, 32(4), 1998.
 
+\bibitem{BK14}
+I.~Bentov and R.~Kumaresan.
+\newblock How to use bitcoin to design fair protocols.
+\newblock In {\em CRYPTO}, 2014.
+
 \bibitem{Cha82}
 D.~Chaum.
 \newblock Blind signatures for untraceable payments.

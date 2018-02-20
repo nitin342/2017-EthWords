@@ -9,9 +9,9 @@ Beginning in the 1980s, a significant amount of the cryptographic literature has
 
 At first glance, Bitcoin seems like a major departure from the e-cash systems from the 80s and 90s. In reality, its `academic pedigree' is a novel combination of pre-existing ideas~\cite{NaCl17}. Similarly, researchers are re-discovering long lost ideas from the e-cash literature and finding new ways to apply them in a blockchain world. For example, blinded coins were a staple of e-cash~\cite{Cha82} that re-emerge, along with accumulators~\cite{SaTa99}, in post-Bitcoin systems like zcash~\cite{MGGR13,SCG+14}. Enabling micropayments through lottery-based probablistic payments of macropayments was explored in the 90s~\cite{Riv97,Whe97,JaOd97} and re-emerged for Bitcoin~\cite{Pash15}. In this paper, we `re-discover' the 1997 payment system \pw from Rivest and Shamir~\cite{RS96}. 
 
-\pw is a credit-based payment system, envisioned for small payments. The mechanics we will turn to later, but for now, the reader can think of tokens being issued that have some value. The key limitation of \pw is that tokens do not have inherent value; their value is based on the trust assumption that a counter-party will honour the value ascribed to them. With Ethereum and other blockchain technologies, we can fix this issue by stapling cryptocurrency to the token through the use of a smart contract. 
+\pw is a credit-based payment system, envisioned for small payments. The mechanics we will turn to later, but for now, the reader can think of tokens being issued that have some value. The key limitation of \pw is that tokens do not have inherent value; their value is based on the trust assumption that a counter-party will honour the value ascribed to them. With Ethereum and other blockchain technologies, we can fix this issue by stapling cryptocurrency to the token through the use of a smart contract. Finally, while Ethereum already has internal functionality for payments, \ew enables payments to be made off-blockchain and settled once on-blockchain.
 
-This transformation turns \pw from a trust-based credit system to a escrow-based payment system; not unlike offline payment channels and networks being proposed for Bitcoin --- the Lightning Network being the most prominent~\cite{PD15}. After presenting our system, \ew, we discuss its relation to payment channels. It is known that an Ethereum-based payment channel will be less complex than a Bitcoin one, since most of the complexity of Bitcoin-based payments channels (\eg \textblue{setup is XX transactions and payment is YY}~\cite{MMSH16}) comes from Bitcoin's limited scripting language. \ew a uni-directional (monotonic) payment channel that can be chained into a payment network and has very compact (\eg 112-bit) payments. It thus might be an interesting primitive to enhance in the same ways other payment channels~\cite{DW15,PD15} have been: adding features~\cite{KG17}, increasing efficiency~\cite{DEFM17,MBKM17}, and adding transactional privacy~\cite{GM17,MMK+17,HAB+17,RMKG18}.
+This transformation turns \pw from a trust-based credit system to a escrow-based payment system; not unlike offline payment channels and networks being proposed for Bitcoin --- the Lightning Network being the most prominent~\cite{PD15}. After presenting our system, \ew, we discuss its relation to payment channels (see Section~\ref{sec:pcn}). It is known that an Ethereum-based payment channel will be less complex than a Bitcoin one, since most of the complexity of Bitcoin-based payments channels (\eg \textblue{setup is XX transactions and payment is YY}~\cite{MMSH16}) comes from Bitcoin's limited scripting language. \ew a uni-directional (monotonic) payment channel that can be chained into a payment network and has very compact (\eg 112-bit) payments. It thus might be an interesting primitive to enhance in the same ways other payment channels~\cite{DW15,PD15} have been: adding features~\cite{KG17}, increasing efficiency~\cite{DEFM17,MBKM17}, and adding transactional privacy~\cite{GM17,MMK+17,HAB+17,RMKG18}.
 
 % = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 % = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
@@ -31,36 +31,47 @@ where $s$ (technically equivalent to $\HashN{0}{s}$) is called the \textit{seed}
 
 \subsubsection{Payments}
 
-In \pw, a hash chain is used for credit-based payments. A customer generates a length $n+1$ hash chain and provides a signed tip to the merchant. They agree that each preceding value in the hash chain has a specified unit of value owed to the merchant by the customer. For example, say $n$ is 100 and the value of each hash in the chain is a \$1 debt owed to the merchant. To expense \$27, the customer provides $\HashN{n-27}{s}$ to the merchant who will verify that hashing it 27 times produces the signed tip. The customer can increase the amount by sending further hashes, up to \$100 (after which, the payment channel is \textit{exhausted} and must be reinitiated).
+In \pw, recognition is used for credit-based payments. A customer generates a length $n+1$ hash chain and provides a signed tip to the merchant. They agree that each preceding value in the hash chain has a specified unit of value owed to the merchant by the customer. For example, say $n$ is 100 and the value of each hash in the chain is a \$1 debt owed to the merchant. To expense \$27, the customer provides $\HashN{n-27}{s}$ to the merchant who will verify that hashing it 27 times produces the signed tip. The customer can increase the amount by sending further hashes, up to \$100 (after which, the payment channel is \textit{exhausted} and must be reinitiated).
 
 % = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 % = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
 \section{\ew}
 
-\ew is a short Ethereum-based smart contract, written in Solidity (see Appendix~\ref{sec:code}), that implements \pw as a payment system. The primary issue with \pw is that 
+\ew is a succinct Ethereum-based smart contract written in Solidity (see Appendix~\ref{sec:code}). The primary issue with \pw is that payments have no actual value and only represent an agreement to pay. In \ew, we staple Ethereum's internal currency ether (ETH) to payments through a smart contract to give them real value. Thus \ew eliminates the counter-party risk in accepting payments that is inherent in \pw, and this is only possible because payments are backed by both a digital currency and a decentralized execution environment.
 
- that enables the aggregation of an offchain set of small payments to one or more onchain larger transactions. Particularly, our contract implements a smart contract moderated version of the Payword micropayment protocol and mediates the interaction between a customer $C$ and a merchant $M$. A pseudocode for the proposed smart contract is shown in Figure \ref{fig.contract}. 
+In \ew, we follow the standard paradigm used in the literature to eliminate counterparty risk (sometimes called claim-or-refund~\cite{BK14}). If Bob (the sender) wants to send up to $X$ \eth to Alice (the receiver), he prepays by loading $X$ \eth into a smart contract that the receiver can withdraw from when specified conditions are met. The sender also sets a deadline for the receiver to withdraw, after which he can release the escrowed funds back to himself. The receiver checks that the contract is properly formed and funded; only then will she accept payments from the sender.
 
+\subsection{Code Design}
 
+When all goes well, \ew will be evoked with functions. 
 
-EthWord is designed with two main functions that mediate the transaction process between $C$ and $M$. First, the contract is instantiated by $C$ through calling the \texttt{open} function. In this function, $C$ initializes the contract through passing the pseudonym of the merchant's account $M$, the tip of the hash chain $\_root$ so that the contract can verify released intermediate hash values against it, the amount that each released hash value is worth $\_wordvalue$, and the total amount of the whole hash chain $\_balance$, and $T_{end}$ which is the time after which remaining funds in the contact's balance are refunded to the customer's account. After calling the \texttt{open} function, both the contract and merchant can evaluate the length of the chain and, thus, $M$ can offline know how many intermediate hash values she can accept from $C$ without the need to constantly monitor the state of the contract. Also, $M$ knows that she has to claim aggregated payments before $T_{end}$ or else, $M$ can refund the contract's available balance.
+ is designed with two main functions that mediate the transaction process between $C$ and $M$. First, the contract is instantiated by $C$ through calling the \texttt{open} function. In this function, $C$ initializes the contract through passing the pseudonym of the merchant's account $M$, the tip of the hash chain $\_root$ so that the contract can verify released intermediate hash values against it, the amount that each released hash value is worth $\_wordvalue$, and the total amount of the whole hash chain $\_balance$, and $T_{end}$ which is the time after which remaining funds in the contact's balance are refunded to the customer's account. After calling the \texttt{open} function, both the contract and merchant can evaluate the length of the chain and, thus, $M$ can offline know how many intermediate hash values she can accept from $C$ without the need to constantly monitor the state of the contract. Also, $M$ knows that she has to claim aggregated payments before $T_{end}$ or else, $M$ can refund the contract's available balance.
+
+\subsection{Use}
+
+\begin{compactlistn}
+\item
+\end{compactlistn}
+\subsection{Relation to Payment Channels}
+\label{sec:pcn}
+
+Ethereum \textsf{Pay50} \cite{DF17}
+
 
 \subsection{Claiming aggregated payments} 
 
 For each payment in the form of an intermediate hash $x=h^i(s)$, $i=1,2,\cdots,N-1$ that $M$ receives from $C$, she can verify its validity offline by evaluating if $h^{(N-i)}(x) = h^N(s)$ or not. Accordingly, $M$ can decide whether to accept the transaction or decline it in the event of a failed verification. After a few micropayments, where $M$ has acquired a set of intermediate hashes, she invokes the \texttt{claim} function in the smart contract by passing to it the last received hash value $wordScratch$, and its order within the hash chain $n$. Consequently, the contract verifies the validity and the required balance of the supplied inputs against the stored hash chain parameters, and upon successful verification, the account of $M$ is credited by the resulting balance.
 
-\subsection{Payment networks} 
+\subsection{Forming payment networks} 
 
-\subsection{Trickle Fairness} 
+
+\subsection{Porting to Bitcoin}
 
 
 % = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 % = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
-\section{Relation to Payment Channels}
-
-Ethereum \textsf{Pay50} \cite{DF17}
 
 % = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 % = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
@@ -93,8 +104,9 @@ EthWord smart contract provides the following guaranteed security properties:
 
 \section{Discussion}
 
-Prepay model.
+\subsection{Limitations of Prepay} 
 
+\subsection{Trickling} 
 
 
 
