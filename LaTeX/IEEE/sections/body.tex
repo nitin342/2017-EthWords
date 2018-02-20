@@ -42,12 +42,7 @@ In \pw, a hash chain is used for credit-based payments. A customer generates a l
 
  that enables the aggregation of an offchain set of small payments to one or more onchain larger transactions. Particularly, our contract implements a smart contract moderated version of the Payword micropayment protocol and mediates the interaction between a customer $C$ and a merchant $M$. A pseudocode for the proposed smart contract is shown in Figure \ref{fig.contract}. 
 
-%\begin{figure}[!th]
-%	\centering
-%	\includegraphics[scale=0.7]{pics/contract.png}
-%	\caption{A pseudocode for the proposed \ew smart contract.}
-%	\label{fig.contract}
-%\end{figure} 
+
 
 EthWord is designed with two main functions that mediate the transaction process between $C$ and $M$. First, the contract is instantiated by $C$ through calling the \texttt{open} function. In this function, $C$ initializes the contract through passing the pseudonym of the merchant's account $M$, the tip of the hash chain $\_root$ so that the contract can verify released intermediate hash values against it, the amount that each released hash value is worth $\_wordvalue$, and the total amount of the whole hash chain $\_balance$, and $T_{end}$ which is the time after which remaining funds in the contact's balance are refunded to the customer's account. After calling the \texttt{open} function, both the contract and merchant can evaluate the length of the chain and, thus, $M$ can offline know how many intermediate hash values she can accept from $C$ without the need to constantly monitor the state of the contract. Also, $M$ knows that she has to claim aggregated payments before $T_{end}$ or else, $M$ can refund the contract's available balance.
 
@@ -57,6 +52,7 @@ For each payment in the form of an intermediate hash $x=h^i(s)$, $i=1,2,\cdots,N
 
 \subsection{Payment networks} 
 
+\subsection{Trickle Fairness} 
 
 
 % = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
@@ -71,17 +67,26 @@ Ethereum \textsf{Pay50} \cite{DF17}
 
 \section{Evaluation}
 
-\subsection{Efficiency}
+\subsubsection{Gas Costs}
 
+Table
 
+\subsubsection{Footprint}
 
-\subsection{Security}
+Size of offline payment.
+
+Table
+
+\subsubsection{Security Properties}
 
 EthWord smart contract provides the following guaranteed security properties:
 \begin{itemize}
 	\item Fair exchange of services:
 	\item Conducting irrefutable transactions without blockchain monitoring:
 \end{itemize}
+
+\subsubsection{Contract Security}
+
 
 % = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 % = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =

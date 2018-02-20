@@ -17,30 +17,30 @@ contract EthWords {
 
   //Check sender is owner
   modifier checkOwner(){
-    if (msg.sender != owner) throw;
+    require(msg.sender == owner);
     _;
   }
 
   //Check sender is receiver
   modifier checkReceiver() {
-    if (msg.sender != receiver) throw;
+    require(msg.sender == receiver);
     _;
   }
 
   //Check that contract has been expired
   modifier checkTime() {
-    if (now < expirationTime) throw;
+    require(now > expirationTime);
     _;
   }
 
   //Check that the state of the state machine
   modifier checkState(States _state) {
-    if (state != _state) throw;
+    require (state == _state);
     _;
   }
 
   //Constructor
-  function EthWords()
+  function EthWords() public
   {
     owner = msg.sender;
     state = States.Init;
@@ -54,7 +54,7 @@ contract EthWords {
   * @param _wordRoot Root word for the paywords
   */
 
-  function open(address _receiver, uint _validityTime, uint _wordValue, bytes32 _wordRoot)
+  function open(address _receiver, uint _validityTime, uint _wordValue, bytes32 _wordRoot) public
     payable
     checkOwner
     checkState(States.Init)
@@ -72,7 +72,7 @@ contract EthWords {
   * @param _wordCount The receiver's assertion of what the payword is worth
   */
 
-  function claim(bytes32 _word, uint _wordCount)
+  function claim(bytes32 _word, uint _wordCount) public
     checkReceiver
     checkState(States.Open)
   {
@@ -82,13 +82,13 @@ contract EthWords {
     // Compute the hashchain to get the root
     bytes32 wordScratch = _word;
     for (uint i = 1; i <= _wordCount; i++){
-      wordScratch = sha3(wordScratch);
+      wordScratch = keccak256(wordScratch);
     }
 
     // Check if root is correct
     if(wordScratch != root) {
       state = States.Open;
-      throw;
+      revert();
     }
 
     // If reached, root is correct so pay the two parties
@@ -106,7 +106,7 @@ contract EthWords {
   * @param _validityTime Time (minutes) to extend the validity period by
   */
 
-  function renew(uint _validityTime)
+  function renew(uint _validityTime) public
     checkOwner
     checkState(States.Open)
     {
@@ -117,7 +117,7 @@ contract EthWords {
   * @dev Refund the contract to the owner after validty period is expired
   */
 
-  function refund()
+  function refund() public
     checkOwner
     checkTime
     checkState(States.Open)
@@ -129,6 +129,6 @@ contract EthWords {
   * @dev Fallback function allows payment at any time
   */
 
-  function() payable { }
+  function() public payable { }
 
 }
