@@ -16,13 +16,25 @@ This transformation turns \pw from a trust-based credit system to a escrow-based
 % = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 % = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
-\section{Payword Primer}
+\section{Preliminaries}
 
-\pw relies on hash chains. A hash chain is constructed by iteratively applying a public one-way hash function $h(.)$ on a random seed value $s$. To create a hash chain of length $N$, one first selects the seed value $s$, then repeatedly applies $h(.)$ on $s$ for $N$ times, thus resulting in a sequence of $N$ hashes:
-\[h^N(s), h^{N-1}(s), h^{N-2}(s), \cdots, h^2(s), h(s),s \]
-where $h^N(s)$ is called the tip of the chain and can be considered as the public key in a public key cryptosystem, and $s$ is also referred to by $h^0(s)$. More precisely, because of the preimage resistance of one way hash functions, knowing $h^N(s)$ does not reveal the value of $s$ or any of the previous hashes $h^{N-i}(s)$, $i=1,2,\cdots,N-1$. On the other hand, by knowing $s$ or any intermediate hash, one can easily verify the correctness of any successive hash values.
+\subsubsection{Hash Chains}
 
-In Payword micropayment scheme, a hash chain is used as follows; the tip $h^N(s)$ is first committed by a customer by digitally signing it such that a merchant can verify this signature. Then, for each successive payment, the customer release a previous hash from the chain which can be verified by the merchant that it hashes to $h^N(s)$. Accordingly, a merchant can aggregate such individual $i$ payments and cash one equivalent larger payment by releasing $h^{N-i}(s)$ to the merchant's financial authority which can verify if it hashes iteratively for $i$ times to $h^N(s)$. The customer may use up to $N$ equivalent payments until the seed value $s$ is used. At this time the hash chain is said to be exhausted and the whole process should be re-initialized again with a different seed value. 
+A hash chain is constructed by iteratively applying a public one-way hash function $\Hash{}$ on a random value $s$. Let the notation $\HashN{i+1}{s} = \Hash{\HashN{i}{s}}$. A hash chain of length $n+1$ is:
+\begin{equation*} \tuple{s,\Hash{s},\HashN{2}{s},\HashN{3}{s},\ldots,\HashN{n-1}{s},\HashN{n}{s}} \end{equation*}
+
+where $s$ (technically equivalent to $\HashN{0}{s}$) is called the \textit{seed} and $\HashN{n}{s}$ is called the \textit{tip}. Given the hash is preimage resistant against a computationally bounded adversary, knowing some value in the chain $\HashN{x}{s}$ does not reveal any values `up' the chain from it, including the seed: $\tuple{s,\ldots,\HashN{x-1}{s}}$. Conversely the value $\HashN{x}{s}$ can be iteratively hashed to produce the rest of the values `down' the chain ending up at the tip. 
+
+\subsubsection{Message Recognition}
+
+One application of a hash chain is a message recognition protocol. If Alice meets Bob at a party, Bob can give the tip of a chain to Alice as a token. Later when Bob meets Alice again, he can provide $\HashN{n-1}{s}$ as proof he is the the same person that gave her the token. On the subsequent visit, he provides $\HashN{n-2}{s}$ and so on for $n$ visits. Of course, Bob could more directly provide Alice with his public key and sign messages each visit, however hash chains avoid the relatively expensive public key operations of a signature scheme. 
+
+\subsubsection{Payments}
+
+
+In \pw,  a hash chain is used as follows; the tip is first committed by a customer by digitally signing it such that a merchant can verify this signature. Then, for each successive payment, the customer release a previous hash from the chain which can be verified by the merchant. Accordingly, a merchant can aggregate such individual $i$ payments and cash one equivalent larger payment by releasing $h^{N-i}(s)$ to the merchant's financial authority which can verify if it hashes iteratively for $i$ times to $h^N(s)$. The customer may use up to $N$ equivalent payments until the seed value $s$ is used. At this time the hash chain is said to be exhausted and the whole process should be re-initialized again with a different seed value. 
+
+\subsubsection{Payments}
 
 % = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 % = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
