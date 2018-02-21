@@ -1,3 +1,4 @@
+//using Ethereum-Wallet-linux32-0-9-3, Solidity compiler to v0.4.18, Geth 1.8.1-stable
 //create privatenet using Geth and Ethereum Wallet
 //create two account plus the main account using Ethereum Wallet or geth command line
 //run Geth console
