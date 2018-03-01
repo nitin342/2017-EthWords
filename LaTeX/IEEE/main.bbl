@@ -76,6 +76,11 @@ A.~Miller, I.~Bentov, R.~Kumaresan, and P.~McCorry.
 \newblock Sprites: Payment channels that go faster than lightning.
 \newblock {\em CoRR}, abs/1702.05812, 2017.
 
+\bibitem{Nak08}
+S.~Nakamoto.
+\newblock Bitcoin: A peer-to-peer electionic cash system.
+\newblock Unpublished, 2008.
+
 \bibitem{NBFMG16}
 A.~Narayanan, J.~Bonneau, E.~W. Felten, A.~Miller, and S.~Goldfeder.
 \newblock {\em Bitcoin and Cryptocurrency Technologies}.
