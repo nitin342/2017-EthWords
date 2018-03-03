@@ -91,15 +91,14 @@ In \pw, recognition is used for credit-based payments. A customer generates a le
 \begin{table}[t]          
 \centering
 \begin{tabular}{ l | r | r }
-System 		& LOC 	& Payment Size 	  \\ \hline
-\textsf{Pay50} 	& 50  	& 257 bits  		  \\
-\eww 		& 45		& 769 bits  		  \\ 
+System 		& SLOC 	& Payment Size 	  \\ \hline
+\textsf{Pay50} 	& 37  	& 264 bits  		  \\
+\eww 		& 31		& 776 bits  		  \\ 
 \end{tabular}
-\caption{Footprint in terms of code complexity and size of offline payments between \eww and \textsf{Pay50}.\label{table:loc}}
+\caption{Footprint in terms of code complexity and size of offline payments between \eww and \textsf{Pay50}. We modernized \textsf{Pay50} slightly, both implementations comply with linter SolHint; simple lines of code (SLOC) is per GitHub's metric.\label{table:loc}}
 \end{table}
 
-A recent blog post by Di Ferrante argues for the simplicity of Ethereum-based payment channels (relative to Bitcoin) and he offers a `50 lines of code' Solidity implementation of a uni-directional, monotonic channel we will name \textsf{Pay50} for the purposes of this paper~\cite{DF17}. As a barebones implementation, it is simple but it relies on offline payments to be signed by the sender. We deploy a lightweight version of \ew that strips out some of the functionality (\eg more flexible funding) and security protections (\eg the state machine) of the code in Appendix~\ref{sec:code}. This version, called \eww, is a line-by-line replication of \textsf{Pay50}, substituting in \ew functionality as relevant.
-
+A recent blog post by Di Ferrante argues for the simplicity of Ethereum-based payment channels (relative to Bitcoin) and he offers a `50 lines of code' Solidity implementation of a uni-directional, monotonic channel we will name \textsf{Pay50} for the purposes of this paper~\cite{DF17}. As a barebones implementation, it is simple but it relies on offline payments to be signed by the sender. We deploy a lightweight version of \ew that strips out some of the functionality (\eg more flexible funding) and security protections (\eg the state machine) of the code in Appendix~\ref{sec:code}. This version, called \eww, is a line-by-line replication of \textsf{Pay50}, substituting in \ew functionality as relevant. As seen in Figure~\ref{table:loc}, \eww does not add to the lines of code; in fact, it even shaves a few off. The more important property is the size of the payment sent to the receiver; this is reduced from a digital signature to a hash or from 776 bits to 264 bits. Note that it is even possible to reduce \eww to 256-bits; an extra 8 bit value representing the length of the hash from the tip is included for a more convenient loop.
 
 \subsubsection{Gas Costs}
 
