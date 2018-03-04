@@ -1,0 +1,141 @@
+\begin{thebibliography}{10}
+
+\bibitem{ABC+98}
+R.~Anderson, F.~Bergadano, B.~Crispo, J.-H. Lee, C.~Manifavas, and R.~Needham.
+\newblock A new family of authentication protocols.
+\newblock {\em SIGOPS Oper. Syst. Rev.}, 32(4), 1998.
+
+\bibitem{BK14}
+I.~Bentov and R.~Kumaresan.
+\newblock How to use bitcoin to design fair protocols.
+\newblock In {\em CRYPTO}, 2014.
+
+\bibitem{Cha82}
+D.~Chaum.
+\newblock Blind signatures for untraceable payments.
+\newblock In {\em CRYPTO}, 1982.
+
+\bibitem{DW15}
+C.~Decker and R.~Wattenhofer.
+\newblock A fast and scalable payment network with bitcoin duplex micropayment
+  channels.
+\newblock In {\em SSS}, 2015.
+
+\bibitem{DF17}
+M.~Di~Ferrante.
+\newblock Ethereum payment channel in 50 lines of code.
+\newblock Medium, June 2017.
+
+\bibitem{DEFM17}
+S.~Dziembowski, L.~Eckey, S.~Faust, and D.~Malinowski.
+\newblock Perun: Virtual payment channels over cryptographic currencies.
+\newblock IACR ePrint, 2017.
+
+\bibitem{GM17}
+M.~Green and I.~Miers.
+\newblock Bolt: Anonymous payment channels for decentralized currencies.
+\newblock In {\em CCS}, 2017.
+
+\bibitem{HAB+17}
+E.~Heilman, L.~Alshenibr, F.~Baldimtsi, A.~Scafuro, and S.~Goldberg.
+\newblock Tumblebit: An untrusted bitcoin-compatible anonymous payment hub.
+\newblock In {\em NDSS}, 2017.
+
+\bibitem{JaOd97}
+S.~Jarecki and A.~Odlyzko.
+\newblock An efficient micropayment system based on probabilistic polling.
+\newblock In {\em Financial Cryptography}, 1997.
+
+\bibitem{KG17}
+R.~Khalil and A.~Gervais.
+\newblock Revive: Rebalancing off-blockchain payment networks.
+\newblock In {\em CCS}, 2017.
+
+\bibitem{Lam81}
+L.~Lamport.
+\newblock Password authentication with insecure communication.
+\newblock {\em CACM}, 24(11), 1981.
+
+\bibitem{LCOSH16}
+L.~Luu, D.-H. Chu, H.~Olickel, P.~Saxena, and A.~Hobor.
+\newblock Making smart contracts smarter.
+\newblock In {\em CCS}, 2016.
+
+\bibitem{MMK+17}
+G.~Malavolta, P.~Moreno-Sanchez, A.~Kate, M.~Maffei, and S.~Ravi.
+\newblock Concurrency and privacy with payment-channel networks.
+\newblock In {\em CCS}, 2017.
+
+\bibitem{MMSH16}
+P.~McCorry, M.~M{\"o}ser, S.~F. Shahandasti, and F.~Hao.
+\newblock Towards bitcoin payment networks.
+\newblock In {\em Information Security and Privacy}, 2016.
+
+\bibitem{MGGR13}
+I.~Miers, C.~Garman, M.~Green, and A.~D. Rubin.
+\newblock {Zerocoin: Anonymous Distributed E-Cash from Bitcoin}.
+\newblock In {\em IEEE Symposium on Security and Privacy}, 2013.
+
+\bibitem{MBKM17}
+A.~Miller, I.~Bentov, R.~Kumaresan, and P.~McCorry.
+\newblock Sprites: Payment channels that go faster than lightning.
+\newblock {\em CoRR}, abs/1702.05812, 2017.
+
+\bibitem{Nak08}
+S.~Nakamoto.
+\newblock Bitcoin: A peer-to-peer electionic cash system.
+\newblock Unpublished, 2008.
+
+\bibitem{NBFMG16}
+A.~Narayanan, J.~Bonneau, E.~W. Felten, A.~Miller, and S.~Goldfeder.
+\newblock {\em Bitcoin and Cryptocurrency Technologies}.
+\newblock Princeton, 2016.
+
+\bibitem{NaCl17}
+A.~Narayanan and J.~Clark.
+\newblock Bitcoin's academic pedigree.
+\newblock {\em CACM}, 60(12), 2017.
+
+\bibitem{Pash15}
+R.~Pass and a.~shelat.
+\newblock Micropayments for decentralized currencies.
+\newblock In {\em CCS}, 2015.
+
+\bibitem{PD15}
+J.~Poon and T.~Dryja.
+\newblock The bitcoin lightning network: Scalable off-chain instant payments,
+  2015.
+
+\bibitem{Riv97}
+R.~L. Rivest.
+\newblock Electronic lottery tickets as micropayments.
+\newblock In {\em Financial Cryptography}, 1997.
+
+\bibitem{RS96}
+R.~L. Rivest and A.~Shamir.
+\newblock {PayWord} and {MicroMint}: two simple micropayment schemes.
+\newblock In {\em Security Protocols}, 1996.
+
+\bibitem{RMKG18}
+S.~Roos, P.~Moreno{-}Sanchez, A.~Kate, and I.~Goldberg.
+\newblock Settling payments fast and private: Efficient decentralized routing
+  for path-based transactions.
+\newblock In {\em NDSS}, 2018.
+
+\bibitem{SaTa99}
+T.~Sander and A.~Ta-Shma.
+\newblock Auditable, anonymous electronic cash.
+\newblock In {\em CRYPTO}, 1999.
+
+\bibitem{SCG+14}
+E.~B. Sasson, A.~Chiesa, C.~Garman, M.~Green, I.~Miers, E.~Tromer, and
+  M.~Virza.
+\newblock Zerocash: Decentralized anonymous payments from bitcoin.
+\newblock In {\em IEEE Symposium on Security and Privacy}, 2014.
+
+\bibitem{Whe97}
+D.~Wheeler.
+\newblock Transactions using bets.
+\newblock In {\em Security Protocols}, 1997.
+
+\end{thebibliography}
