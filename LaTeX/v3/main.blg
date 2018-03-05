@@ -3,44 +3,44 @@ Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
 The top-level auxiliary file: main.aux
 The style file: abbrv.bst
 Database file #1: bib/bitcoin.bib
-You've used 27 entries,
+You've used 28 entries,
             2118 wiz_defined-function locations,
-            639 strings with 6966 characters,
-and the built_in function-call counts, 7880 in all, are:
-= -- 665
-> -- 470
+            643 strings with 7004 characters,
+and the built_in function-call counts, 8073 in all, are:
+= -- 681
+> -- 477
 < -- 0
-+ -- 189
-- -- 158
-* -- 462
-:= -- 1360
-add.period$ -- 80
-call.type$ -- 27
-change.case$ -- 159
++ -- 192
+- -- 160
+* -- 467
+:= -- 1391
+add.period$ -- 82
+call.type$ -- 28
+change.case$ -- 163
 chr.to.int$ -- 0
-cite$ -- 27
-duplicate$ -- 332
-empty$ -- 686
-format.name$ -- 158
-if$ -- 1637
+cite$ -- 28
+duplicate$ -- 339
+empty$ -- 708
+format.name$ -- 160
+if$ -- 1679
 int.to.chr$ -- 0
-int.to.str$ -- 27
+int.to.str$ -- 28
 missing$ -- 24
-newline$ -- 137
-num.names$ -- 54
-pop$ -- 245
+newline$ -- 141
+num.names$ -- 56
+pop$ -- 253
 preamble$ -- 1
-purify$ -- 133
+purify$ -- 136
 quote$ -- 0
-skip$ -- 202
+skip$ -- 212
 stack$ -- 0
-substring$ -- 139
-swap$ -- 45
+substring$ -- 144
+swap$ -- 46
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 106
+type$ -- 110
 warning$ -- 0
-while$ -- 54
-width$ -- 29
-write$ -- 274
+while$ -- 56
+width$ -- 30
+write$ -- 281

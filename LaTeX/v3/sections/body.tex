@@ -27,7 +27,7 @@ where $s$ (technically equivalent to $\HashN{0}{s}$) is called the \textit{seed}
 
 \textbf{Recognition.} If Alice meets Bob at a party, Bob can give the tip of a chain to Alice as a token~\cite{ABC+98}. Later when Bob meets Alice again, he can provide $\HashN{n-1}{s}$ as proof he is the the same person that gave her the token. On the subsequent visit, he provides $\HashN{n-2}{s}$ and so on for $n$ visits. Of course, Bob could more directly provide Alice with his public key and sign messages each visit, however hash chains avoid the relatively expensive public key operations of a signature scheme.
 
-\textbf{Payments.} In \pw, recognition is used for credit-based payments. A \make generates a length $n+1$ hash chain and provides a signed tip to a \take. They agree that each preceding value in the hash chain has a specified unit of value owed to the \take by the \make. For example, say $n$ is 100 and the value of each hash in the chain is a \$1 debt owed to the \take. To expense \$27, the \make provides $\HashN{n-27}{s}$ to the \take who will verify that hashing it 27 times produces the signed tip. The \make can increase the amount by sending further hashes, up to \$100 (the \textit{capacity}), after which, the payment channel is \textit{exhausted} and must be reinitiated.
+\textbf{Payments.} In \pw, recognition is used for credit-based payments. A \make generates a length $n+1$ hash chain and provides a signed\footnote{The signature is for non-repudiation of the financial arrangement, not for future authentication.} tip to a \take. They agree that each preceding value in the hash chain has a specified unit of value owed to the \take by the \make. For example, say $n$ is 100 and the value of each hash in the chain is a \$1 debt owed to the \take. To expense \$27, the \make provides $\HashN{n-27}{s}$ to the \take who will verify that hashing it 27 times produces the signed tip. The \make can increase the amount by sending further hashes, up to \$100 (the \textit{capacity}), after which, the payment channel is \textit{exhausted} and must be reinitiated.
 
 % = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 % = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
@@ -69,12 +69,7 @@ Consider a third party, in addition to the \make and the \take, called an interm
 
 \subsection{Porting to Bitcoin}
 
-\textblue{\pw almost works in Bitcoin script. Transactions can be hash-locked and scripting supports iterative scripting. The issue is that the number of hashes to invoke cannot be a parameter of inputScript. Ask Paddy for reference to implementation of this. }
-
-
-% = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-% = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-
+Bitcoin's scripting language is purposely limited compared to Ethereum to ensure Bitcoin scripts execute efficiently and are generally related to Bitcoin's core functionality of digital money. Many of the components of \pw are present in Bitcoin script, including but not limited to locking transactions with a hash image that requires a pre-image to spend; and the ability to iteratively hash elements. However it does either looping nor any enforcement on how an output can be split---\ie once an unspent output evaluates to true, it can be spent any way specified. Therefore PayWord appears to require a moderate extension to Bitcoin's scripting language for implementation; one proposal such is MicroBTC~\cite{Wan18}.
 
 % = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 % = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
