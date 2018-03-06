@@ -122,7 +122,7 @@ We also do other small things to ensure proper execution: (1) we whitelist addre
 
 \section{Discussion}
 
-\textbf{Micropayments.} With a total gas cost (to construct, open, and claim within a contract) of \$7 or more, \ew (or other Ethereum-based payment networks) are not suitable for true micropayments. Even to send \$100 of value, it represents a 7\% fee. \eww is slightly leaner than \ew \textblue{but still costs \ldots XXXX}.
+\textbf{Micropayments.} With a total gas cost (to construct, open, and claim within a contract) of \$7 or more, \ew (or other Ethereum-based payment networks) are not suitable for true micropayments. Even to send \$100 of value, it represents a 7\% fee. \eww is slightly leaner than \ew \textblue{but still costs \ldots XXXX}. The simplest internal Ethereum transaction costs 21\,000 gas so \ew will have to replace ~20 transactions to pay for itself. 
 
 \textbf{Prepaying.} A second limitation that underlies almost all payment channels is the fact that payments have to be \textit{prepaid}. Without some broader economic infrastructure, a payment channel or network is similar to using prepaid cards, something most customers choose to do with fiat currencies unless if they are  compensated (generally, customers pay for credit; preloading a card or account is giving the merchant credit which they should also pay for\footnote{For example, a \$50 Apple Store prepaid card might sell for \$40 or using a preloaded Starbucks app might result in rewards that can be redeemed for future purchases.}). If Alice were to pay all her bills for a single year using \ew (or other payment channel), she would have to have enough Ether for an entire year on the first day of the year. More many people, this would be a cash flow issue. 
 
