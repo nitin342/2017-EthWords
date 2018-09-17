@@ -20,6 +20,7 @@ contract Channel {
 
     function closeChannel(bytes32 _word, uint8 _wordCount) public {
 
+        require(msg.sender == channelRecipient);
         bytes32 wordScratch = _word;
         for (uint i = 1; i <= _wordCount; i++) {
             wordScratch = keccak256(wordScratch);
