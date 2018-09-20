@@ -60,6 +60,7 @@ contract EthWords {
     checkState(States.Init)
   {
     receiver = _receiver;
+    require(now < now + _validityTime * 1 minutes);
     expirationTime = now + _validityTime * 1 minutes;
     wordValue = _wordValue;
     root = _wordRoot;
@@ -110,7 +111,8 @@ contract EthWords {
     checkOwner
     checkState(States.Open)
     {
-      assert(_validityTime>0);
+      //assert(_validityTime>0);
+      require(expirationTime < expirationTime + _validityTime * 1 minutes);
       expirationTime += _validityTime * 1 minutes;
     }
 
