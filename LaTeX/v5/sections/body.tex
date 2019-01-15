@@ -5,9 +5,9 @@
 
 \section{Introduction} 
 
-\pw is a credit-based payment system, envisioned for small payments proposed by Rivest and Shamir~\cite{RS96}. The mechanics we will turn to later, but for now, the reader can think of tokens being issued that have some value. The key advantage of \pw is its efficiency and succinctness drawn from only using hash functions. A limitation of \pw is that tokens do not have inherent value; their value is based on the trust assumption that a counter-party will honour the value ascribed to them. With Ethereum and other blockchain technologies, we can fix this issue by stapling cryptocurrency to the token through the use of a smart contract. Finally, while Ethereum already has internal functionality for payments, \ew enables payments to be made off-blockchain and settled once on-blockchain.
+\pw is a credit-based payment system, envisioned for small payments proposed by Rivest and Shamir~\cite{RS96}. The mechanics we will turn to later, but for now, the reader can think of tokens being issued that have some value. The key advantage of \pw is its efficiency and succinctness drawn from using only hash functions. A limitation of \pw is that tokens do not have inherent value; their value is based on the trust assumption that a counter-party will honour the value ascribed to them. With Ethereum and other blockchain technologies, we can fix this issue by stapling cryptocurrency to the token through the use of a smart contract. Finally, while Ethereum already has internal functionality for payments, \ew enables payments to be made off-blockchain and settled once on-blockchain.
 
-This transformation turns \pw from a trust-based credit system to an escrow-based payment system; not unlike offline payment channels and networks being proposed for Bitcoin --- the Lightning Network being the most prominent~\cite{PD15}. After presenting our system, \ew, we discuss its relation to payment channels (see Section~\ref{sec:pcn}). It is known that an Ethereum-based payment channel will be less complex than a Bitcoin one, since most of the complexity of Bitcoin-based payments channels comes from Bitcoin's limited scripting language~\cite{MMSH16}. \ew is a uni-directional payment channel that can be chained into a payment network and has very compact (\eg 256-bit) payments. It thus might be an interesting primitive to enhance in the same ways other payment channels~\cite{DW15,PD15} have been: adding features~\cite{KG17}, increasing efficiency~\cite{DEFM17,MBKM17}, and adding transactional privacy~\cite{GM17,MMK+17,HAB+17,RMKG18}.
+This transformation turns \pw from a trust-based credit system to an escrow-based payment system; not unlike offline payment channels and networks being proposed for Bitcoin --- the Lightning Network being the most prominent~\cite{PD15}. It is known that an Ethereum-based payment channel will be less complex than a Bitcoin one, since most of the complexity of Bitcoin-based payments channels comes from Bitcoin's limited scripting language~\cite{MMSH16}. \ew is a uni-directional payment channel that can be chained into a payment network and has very compact (\eg 256-bit) payments. It thus might be an interesting primitive to enhance in the same ways other payment channels~\cite{DW15,PD15} have been: adding features~\cite{KG17}, increasing efficiency~\cite{DEFM17,MBKM17}, and adding transactional privacy~\cite{GM17,MMK+17,HAB+17,RMKG18}.
 
 \section{Background}
 
@@ -33,42 +33,59 @@ where $s$ (technically equivalent to $\HashN{0}{s}$) is called the \textit{seed}
 
 \label{sec:pcn}
 
-\textbf{Pay50.} A recent blog post by Di Ferrante argues for the simplicity of Ether\-eum-based payment channels (relative to Bitcoin) and he offers a `50 lines of code' Solidity implementation of a uni-directional, monotonic channel we will name \textsf{Pay50} for the purposes of this paper~\cite{DF17}. As a barebones implementation, it is simple and it relies on offline payments to be signed by the sender. \textblue{Summarize it here}
+\textbf{Pay50.} A recent blog post by Di Ferrante argues for the simplicity of Ether\-eum-based payment channels (relative to Bitcoin) and he offers a `50 lines of code' Solidity implementation of a uni-directional, monotonic channel we will name \fifty for the purposes of this paper~\cite{DF17}. As a deliberate barebones implementation, it is simple and it relies on offline payments to be signed by the sender. We describe it further in the next section. 
 
 % = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 % = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
 \section{\ew Implementation}
 
-\ew is a line-by-line replication of \textsf{Pay50}, substituting in \pw functionality as relevant, and with some minor modernization to make both implementations compliant with Solidity version 0.5.0.\footnote{The source code of \textsf{Pay50} and \ew can be downloaded from \url{https://github.com/Ethword/EthWord-smart-contract}} We replicate \textsf{Pay50} to enable a fair comparison between a signature-based (\textsf{Pay50}) and hash-based (\ew) approach.
+\ew is a line-by-line replication of \fifty, replacing the use of digital signatures with hash functions as described in the original \pw proposal. We slightly modernize \fifty to make it compliant with changes introduced in the Solidity language.\footnote{The source code of \fifty and \ew are included in the appendix.} We replicate \fifty to enable an isolated comparison between a signature-based approach (\fifty) and hash-based (\ew) approach.
 
+The primary issue with \pw is that payments have no actual value and only represent an agreement to pay. In \ew, we staple Ethereum's internal currency ether (ETH) to the payments through a smart contract to give them real value. Thus \ew eliminates the counter-party risk in accepting payments that is inherent in \pw, and this is only possible because payments are backed by both a digital currency and a decentralized execution environment.
 
+Both \fifty and \ew follow the standard paradigm used in the literature to eliminate counterparty risk (sometimes called \textit{claim-or-refund}~\cite{BK14}). If Bob (the \make) wants to send up to $X$ \eth to Alice (the \take), he prepays by loading $X$ \eth into a smart contract that the \take can withdraw from when specified conditions are met. The \make also sets a deadline for the \take to withdraw, after which he can release the escrowed funds back to himself. The \take checks that the contract is properly formed and funded; only then will she accept payments from the \make.
 
-\ew is a succinct Ethereum-based smart contract written in Solidity.\footnote{The source code of \ew can be downloaded from \url{https://github.com/Ethword/EthWord-smart-contract}}. It is adapted from another  The primary issue with \pw is that payments have no actual value and only represent an agreement to pay. In \ew, we staple Ethereum's internal currency ether (ETH) to the payments through a smart contract to give them real value. Thus \ew eliminates the counter-party risk in accepting payments that is inherent in \pw, and this is only possible because payments are backed by both a digital currency and a decentralized execution environment.
-We follow the standard paradigm used in the literature to eliminate counterparty risk (sometimes called \textit{claim-or-refund}~\cite{BK14}). If Bob (the \make) wants to send up to $X$ \eth to Alice (the \take), he prepays by loading $X$ \eth into a smart contract that the \take can withdraw from when specified conditions are met. The \make also sets a deadline for the \take to withdraw, after which he can release the escrowed funds back to himself. The \take checks that the contract is properly formed and funded; only then will she accept payments from the \make.
+\subsection{\ew Code Design} 
 
-\subsection{\ew Code Design}
-
-\ew use a constructor to establish the owner of the contract. The \texttt{open()} function initializes the payment channel with the relevant information (see Protocol~\ref{alg:lab}). It is the only function that can be run after the constructor. After \texttt{open()} and during the validity period, the \take can run \texttt{claim()} --- if successful, the contract destructs. The \make can run \texttt{renew()} to extend the validity period into the future. 
-
-For example, the \make might make a hash-chain of length 100, opens the channel with the tip, specifies the value of each hash as 0.01 \eth, and funds the contract with 1 \eth. Note that the contract does not care about the length of the hash chain because there is no simple way (nor reason) for the \take to actually verify the length of the hash-chain. If it is too short, then \make cannot make payments after a certain point. If it is longer, than \take needs to stop accepting payments in excess\footnote{ride} of what she has verified to the contract to hold. Similarly, since the length of the hashchain is unknown to \take, the contract does not require a specific amount to be funded. The \take will just treat this amount as the maximum. The amount of \eth held by the contract can be increased after opening, through the default function, but this requires one on-blockchain transaction and also requires the \take to reference the blockchain to see the increase. Thus, if increases are used too often, it becomes more economical to simply send \eth directly with Ethereum's built-in payment system than using \ew.
-
-The \make can make an offline payment to the \take by sending a hash (again see Protocol~\ref{alg:lab}). Note that the hash is in no way bound to the identity of the \take---the smart contract binds the use of the hash to the \take. Next, note that technically the \take can compute the chain and submit any hash from this chain to \texttt{claim()}, however they are incentivized to send the most valuable hash. For this same reason, the \make can then later `up the payment' by sending a more valuable hash to the \take. This can be repeated until the \make runs out of hashes or \take wants to run \texttt{claim()}. This is called \textit{replace-by-incentive}~\cite{MMSH16} in the payment channel literature (see next section).
 \begin{Protocol*}[t!]
-	
 	 \begin{framed} \footnotesize
-		
 		\begin{compactlistn}
 			\item The \make runs the constructor of \ew.
-			\item The \make opens the contract by specifying the identity of \take, the validity period of the channel, how much each hash is worth, and funds the contract. While open, \make can always add additional funds to the contract or extend the validity period. The \make will send the contract address to \take. 
+			\item The \make opens the contract by specifying the identity of \take, the validity period of the channel, how much each hash is worth, and funds the contract. The \make will send the contract address to \take. 
 			\item The \take will check the parameters of the contract to ensure it is funded, how long she has to settle the account before the \make can withdraw his deposited funds, and the total amount of the deposited funds. When satisfied, she stores the hashchain tip offline.
 			\item Offline, the \make will make payments by sending hash values. The \take will check that the value iteratively hashes to the tip for a correct number of iterations corresponding to amount of payment she expects. If \make wants to make successive payments, they send a new hash that represents the new total amount to be paid to the \take.
 			\item At any time while the contract is open, \take can submit a hash value and receive the appropriate payment. If the \take has not run this function and the validity period expires, the \make can withdraw all the money in the contract and close it.
 		\end{compactlistn}
 		\normalsize \end{framed}
 	\caption{The on-blockchain and off-blockchain steps in \ew payments~\label{alg:lab}}
-	
 \end{Protocol*}
+
+As \ew is a modification of \fifty, we will discuss the design of both in parallel. Both use the constructor to initially setup the contract. In addition, they have two functions that both close the channel: one is used by the \take to claim a payment and other is used by the \make to dissolve the contract after it has timed out. \ew is summerized in Protocol~\ref{alg:lab}.
+
+\paragraph{Constructor.} The constructor establishes the core components of the contract:
+
+\begin{compactlist}
+\item \take: \texttt{msg.sender} for the contract creation.
+\item \make: an address passed into the constructor.
+\item Total available funds: the constructor allows an amount of Ether to be transferred to the payment channel contract (the constructor is marked \texttt{payable}).
+\item Timeout: a validity period passed into the constructor. The contract also stores the block timestamp of when the constructor was run. These values are added together and when they exceed any future block timestamp, the self-destruct function is permitted to run allowing the \make a refund.
+\end{compactlist}
+
+Note that as implemented, the timeout functionality is timestamp dependent which could enable the \make to refund earlier than allowed, or alternatively be locked out from refunding, as a result of miner manipulation of the timestamps. This is feasible for adjustments of approximately 900 seconds. Therefore, the contract timeout should be considered `fuzzy' and should be sufficient when run over the course of hours, days, or years; which is standard for proposed use cases of payment channels. 
+
+For \ew specifically, the constructor also establishes the payword tip and the amount of Ether each payword is worth. 
+
+\paragraph{CloseChannel}
+
+Consider a contract that holds 1.00 ETH is escrow, the \take supplies evidence that they are entitled to, say, 0.45 of the 1.00 ETH by invoking this function. For \fifty, the evidence is the amount they can claim as signed by \make and the contract validates the signature. For \ew, it is the output of a hash function.
+
+For example, the \make might make a hash-chain of length 100, opens the channel with the tip, specifies the value of each hash as 0.01 \eth, and funds the contract with 1 \eth. Note that the contract does not care about the length of the hash chain because there is no simple way (nor reason) for the \take to actually verify the length of the hash-chain. If it is too short, then \make cannot make payments after a certain point. If it is longer, than \take needs to stop accepting payments in excess\footnote{ride} of what she has verified to the contract to hold. Similarly, since the length of the hashchain is unknown to \take, the contract does not require a specific amount to be funded. The \take will just treat this amount as the maximum. The amount of \eth held by the contract can be increased after opening, through the default function, but this requires one on-blockchain transaction and also requires the \take to reference the blockchain to see the increase. Thus, if increases are used too often, it becomes more economical to simply send \eth directly with Ethereum's built-in payment system than using \ew.
+
+The \make can make an offline payment to the \take by sending a hash (again see Protocol~\ref{alg:lab}). Note that the hash is in no way bound to the identity of the \take---the smart contract binds the use of the hash to the \take. Next, note that technically the \take can compute the chain and submit any hash from this chain to \texttt{claim()}, however they are incentivized to send the most valuable hash. For this same reason, the \make can then later `up the payment' by sending a more valuable hash to the \take. This can be repeated until the \make runs out of hashes or \take wants to run \texttt{claim()}. This is called \textit{replace-by-incentive}~\cite{MMSH16} in the payment channel literature (see next section).
+
+\paragraph{Timeout}
+
 
 
 
