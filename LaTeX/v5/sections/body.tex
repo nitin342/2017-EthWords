@@ -100,12 +100,18 @@ Bitcoin's scripting language is purposely limited compared to Ethereum to ensure
 
 \begin{table}[t]          
 \centering
+%\begin{tabular}{ l | r | r | r }
+%Function & Gas & ETH & USD \\ \hline
+%Constructor 		&328\,637  	& 0.00433 	& \$0.908 \\
+%Open 			&126\,180 		& 0.00166 	& \$0.349 \\ 
+%Claim (50) 		&21\,511  	& 0.00028 	& \$0.059 \\
+%Claim (100) 		&25\,772  	& 0.00034 	& \$0.071 \\ 
+%\end{tabular}
 \begin{tabular}{ l | r | r | r }
 Function & Gas & ETH & USD \\ \hline
-Constructor 		&328\,637  	& 0.00433 	& \$0.908 \\
-Open 			&126\,180 		& 0.00166 	& \$0.349 \\ 
-Claim (50) 		&21\,511  	& 0.00028 	& \$0.059 \\
-Claim (100) 		&25\,772  	& 0.00034 	& \$0.071 \\ 
+Channel 		&312\,031 & 0.00539 	& \$0.689 \\
+closeChannel (50) 		&18\,905  	& 0.00033 	& \$0.042 \\
+closeChannel (100) 		&22\,205  	& 0.00038 	& \$0.049 \\ 
 \end{tabular}
 \setlength{\belowcaptionskip}{-5pt}
 \caption{\textblue{To Do: change for \eww} Cost of running the basic contract functions. Since claim is dependent on how long the hash chain is for the claimed payment, the function shows costs for length 50 and length 100. See Figure~\ref{fig:gas} for more on this.\label{table:gas}}
@@ -121,7 +127,7 @@ Claim (100) 		&25\,772  	& 0.00034 	& \$0.071 \\
 	
 \end{figure}
 
-\textbf{Gas Costs.} As of September 18th, 2018, the weighted average price of 1 gas is $13.2\times10^{-9}$~ETH\footnote{https://ethgasstation.info/} and the exchange rate of 1 ETH to USD is \$209.64.\footnote{https://coinmarketcap.com/} We show the gas costs of each function in \ew if run successfully. The cost of the claim function includes checking if the provided payment (hash) is part of the hash chain (if when iteratively hashed, it results in the tip value). Thus the cost of claiming will vary on how many times the hash must be iterated. For example, consider a channel with 100 payment values worth \$1 each. Running claim on the payment value representing \$5 will require hashing the value 5 times. The payment value of \$95 will require 95 hashes and thus cost more. 
+\textbf{Gas Costs.} As of \textblue{January 15th, 2019}, the weighted average price of 1 gas is $\textblue{17.26}\times10^{-9}$~ETH\footnote{https://ethgasstation.info/} and the exchange rate of 1 ETH to USD is \$\textblue{127.85}.\footnote{https://coinmarketcap.com/} We show the gas costs of each function in \ew if run successfully. The cost of the claim function includes checking if the provided payment (hash) is part of the hash chain (if when iteratively hashed, it results in the tip value). Thus the cost of claiming will vary on how many times the hash must be iterated. For example, consider a channel with 100 payment values worth \$1 each. Running claim on the payment value representing \$5 will require hashing the value 5 times. The payment value of \$95 will require 95 hashes and thus cost more. 
 
 %In Figure~\ref{fig:gas}, we show the gas cost of the claim function as the number as the length of the chain varies from 1 to 100. At 100, the cost is 25\,772 which is still about half the cost of running a claim function that must verify a digital signature (\eg \textsf{Pay50} uses the \texttt{ecrecover} operation in Solidity with some additional processing logic).
 In Figure~\ref{fig:gas}, we show the total gas cost of running the payment channels \ew, \eww, \textsf{Pay50}, and the internal Ethereum Ether Transfer as a function of the number of payments varies from 1 to 100. At 100, the cost by \eww is 334\,236 which is still about 30\% less than the cost of running \textsf{Pay50} that must verify a digital signature (\eg \textsf{Pay50} uses the \texttt{ecrecover} operation in Solidity with some additional processing logic).
