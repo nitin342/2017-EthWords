@@ -24,7 +24,7 @@ C.~Decker and R.~Wattenhofer.
 \bibitem{DF17}
 M.~Di~Ferrante.
 \newblock Ethereum payment channel in 50 lines of code.
-\newblock Medium, June 2017.
+\newblock Medium, 2017.
 
 \bibitem{DEFM17}
 S.~Dziembowski, L.~Eckey, S.~Faust, and D.~Malinowski.
@@ -104,7 +104,7 @@ J.~Poon and T.~Dryja.
 \bibitem{Riv97}
 R.~L. Rivest.
 \newblock Electronic lottery tickets as micropayments.
-\newblock In {\em Financial Cryptography}, 1997.
+\newblock In {\em FC}, 1997.
 
 \bibitem{RS96}
 R.~L. Rivest and A.~Shamir.
@@ -112,13 +112,13 @@ R.~L. Rivest and A.~Shamir.
 \newblock In {\em Security Protocols}, 1996.
 
 \bibitem{RMKG18}
-S.~Roos, P.~Moreno{-}Sanchez, A.~Kate, and I.~Goldberg.
+S.~Roos, P.~Moreno{-}Sanchez, A.~Kate, I.~Goldberg.
 \newblock Settling payments fast and private: Efficient decentralized routing
   for path-based transactions.
 \newblock In {\em NDSS}, 2018.
 
 \bibitem{SaTa99}
-T.~Sander and A.~Ta-Shma.
+T.~Sander, A.~Ta-Shma.
 \newblock Auditable, anonymous electronic cash.
 \newblock In {\em CRYPTO}, 1999.
 
