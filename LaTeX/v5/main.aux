@@ -49,18 +49,15 @@
 \@writefile{struct}{\contentsline {Protocol}{\numberline {1}{\ignorespaces The on-blockchain and off-blockchain steps in \textsf  {EthWord}\xspace  payments\nobreakspace  {}}}{4}{Protocol.1}}
 \newlabel{alg:lab}{{1}{4}{\ew Code Design}{Protocol.1}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.1}\textsf  {EthWord}\xspace  Code Design}{4}{subsection.1.4.1}}
-\@writefile{toc}{\contentsline {paragraph}{Constructor.}{4}{section*.2}}
 \citation{MMSH16}
-\@writefile{toc}{\contentsline {paragraph}{CloseChannel}{5}{section*.3}}
-\@writefile{toc}{\contentsline {paragraph}{Timeout}{5}{section*.4}}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Function cost. Since claim is dependent on how long the hash chain is for the claimed payment, we shows costs for length 50 and length 100.}}{5}{table.1.1}}
+\newlabel{table:gas}{{1}{5}{Function cost. Since claim is dependent on how long the hash chain is for the claimed payment, we shows costs for length 50 and length 100}{table.1.1}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Forming payment networks}{5}{subsection.1.4.2}}
-\citation{Wan18}
-\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces \leavevmode {\color  {blue}To Do: change for \textsf  {EthWord}\xspace  } Cost of running the basic contract functions. Since claim is dependent on how long the hash chain is for the claimed payment, the function shows costs for length 50 and length 100. See Figure\nobreakspace  {}\ref  {fig:gas} for more on this.}}{6}{table.1.1}}
-\newlabel{table:gas}{{1}{6}{\textblue {To Do: change for \eww } Cost of running the basic contract functions. Since claim is dependent on how long the hash chain is for the claimed payment, the function shows costs for length 50 and length 100. See Figure~\ref {fig:gas} for more on this}{table.1.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Porting to Bitcoin}{6}{subsection.1.4.3}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces The total gas cost of running the payment channels \textsf  {EthWord}\xspace  , \textsf  {Pay50}, and the internal Ether Transfer as a function of the number of payments. Internal transfers are most economical up to 16 transactions, then \textsf  {EthWord}\xspace  is most economical, and we extrapolate that \textsf  {Pay50}\xspace  (at a gas cost of around 460\tmspace  +\thinmuskip {.1667em}000) will only become more economical when the transactions exceed 1700.}}{6}{figure.1.1}}
+\newlabel{fig:gas}{{1}{6}{The total gas cost of running the payment channels \ew , \textsf {Pay50}, and the internal Ether Transfer as a function of the number of payments. Internal transfers are most economical up to 16 transactions, then \ew is most economical, and we extrapolate that \fifty (at a gas cost of around 460\,000) will only become more economical when the transactions exceed 1700}{figure.1.1}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {5}Evaluation}{6}{section.1.5}}
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces The total gas cost (\leavevmode {\color  {blue}confirm:} construction, open, and claim) of running the payment channels \textsf  {EthWord}\xspace  , \textsf  {Pay50}, and the internal Ethereum Ether Transfer as a function of the number of payments. The gas cost of \textsf  {Pay50} is around 460\tmspace  +\thinmuskip {.1667em}000.}}{7}{figure.1.1}}
-\newlabel{fig:gas}{{1}{7}{The total gas cost (\textblue {confirm:} construction, open, and claim) of running the payment channels \ew , \textsf {Pay50}, and the internal Ethereum Ether Transfer as a function of the number of payments. The gas cost of \textsf {Pay50} is around 460\,000}{figure.1.1}{}}
+\citation{Wan18}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Discussion}{7}{section.1.6}}
 \bibdata{bib/bitcoin}
 \bibcite{ABC+98}{1}
 \bibcite{BK14}{2}
@@ -70,27 +67,25 @@
 \bibcite{DEFM17}{6}
 \bibcite{GM17}{7}
 \bibcite{HAB+17}{8}
-\@writefile{toc}{\contentsline {section}{\numberline {6}Discussion}{8}{section.1.6}}
 \bibcite{JaOd97}{9}
 \bibcite{KG17}{10}
 \bibcite{Lam81}{11}
-\bibcite{LCOSH16}{12}
-\bibcite{MMK+17}{13}
-\bibcite{MMSH16}{14}
-\bibcite{MGGR13}{15}
-\bibcite{MBKM17}{16}
-\bibcite{Nak08}{17}
-\bibcite{NBFMG16}{18}
-\bibcite{NaCl17}{19}
-\bibcite{Pash15}{20}
-\bibcite{PD15}{21}
-\bibcite{Riv97}{22}
-\bibcite{RS96}{23}
-\bibcite{RMKG18}{24}
-\bibcite{SaTa99}{25}
-\bibcite{SCG+14}{26}
-\bibcite{Wan18}{27}
-\bibcite{Whe97}{28}
+\bibcite{MMK+17}{12}
+\bibcite{MMSH16}{13}
+\bibcite{MGGR13}{14}
+\bibcite{MBKM17}{15}
+\bibcite{Nak08}{16}
+\bibcite{NBFMG16}{17}
+\bibcite{NaCl17}{18}
+\bibcite{Pash15}{19}
+\bibcite{PD15}{20}
+\bibcite{Riv97}{21}
+\bibcite{RS96}{22}
+\bibcite{RMKG18}{23}
+\bibcite{SaTa99}{24}
+\bibcite{SCG+14}{25}
+\bibcite{Wan18}{26}
+\bibcite{Whe97}{27}
 \citation{DF17}
 \@writefile{toc}{\contentsline {section}{\numberline {A}\textsf  {Pay50} Source Code\nobreakspace  {}\cite  {DF17} in Solidity}{10}{section.A.1}}
 \newlabel{sec:pay50}{{A}{10}{\textsf {Pay50} Source Code~\cite {DF17} in Solidity}{section.A.1}{}}

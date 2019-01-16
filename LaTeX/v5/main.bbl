@@ -56,11 +56,6 @@ L.~Lamport.
 \newblock Password authentication with insecure communication.
 \newblock {\em CACM}, 24(11), 1981.
 
-\bibitem{LCOSH16}
-L.~Luu, D.-H. Chu, H.~Olickel, P.~Saxena, and A.~Hobor.
-\newblock Making smart contracts smarter.
-\newblock In {\em CCS}, 2016.
-
 \bibitem{MMK+17}
 G.~Malavolta, P.~Moreno-Sanchez, A.~Kate, M.~Maffei, and S.~Ravi.
 \newblock Concurrency and privacy with payment-channel networks.

@@ -1,6 +1,6 @@
 pragma solidity ^0.4.18;
 
-//Code by @mattdf (modernized slightly by @PulpSpy)
+//Code by @mattdf (modernized slightly by _anon_)
 
 contract Channel {
 

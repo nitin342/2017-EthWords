@@ -1,0 +1,46 @@
+This is BibTeX, Version 0.99d (TeX Live 2015)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: main.aux
+The style file: abbrv.bst
+Database file #1: bib/bitcoin.bib
+You've used 27 entries,
+            2118 wiz_defined-function locations,
+            639 strings with 6875 characters,
+and the built_in function-call counts, 7708 in all, are:
+= -- 652
+> -- 449
+< -- 0
++ -- 181
+- -- 150
+* -- 441
+:= -- 1328
+add.period$ -- 79
+call.type$ -- 27
+change.case$ -- 155
+chr.to.int$ -- 0
+cite$ -- 27
+duplicate$ -- 325
+empty$ -- 680
+format.name$ -- 150
+if$ -- 1605
+int.to.chr$ -- 0
+int.to.str$ -- 27
+missing$ -- 23
+newline$ -- 136
+num.names$ -- 54
+pop$ -- 241
+preamble$ -- 1
+purify$ -- 129
+quote$ -- 0
+skip$ -- 205
+stack$ -- 0
+substring$ -- 139
+swap$ -- 44
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 106
+warning$ -- 0
+while$ -- 54
+width$ -- 29
+write$ -- 271

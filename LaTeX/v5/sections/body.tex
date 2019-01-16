@@ -61,9 +61,7 @@ Both \fifty and \ew follow the standard paradigm used in the literature to elimi
 	\caption{The on-blockchain and off-blockchain steps in \ew payments~\label{alg:lab}}
 \end{Protocol*}
 
-As \ew is a modification of \fifty, we will discuss the design of both in parallel. Both use the constructor to initially setup the contract. In addition, they have two functions that both close the channel: one is used by the \take to claim a payment and other is used by the \make to dissolve the contract after it has timed out. \ew is summerized in Protocol~\ref{alg:lab}.
-
-\paragraph{Constructor.} The constructor establishes the core components of the contract:
+As \ew is a modification of \fifty, we will discuss the design of both in parallel. Both use the constructor to initially setup the contract. In addition, they have two functions that both close the channel: one is used by the \take to claim a payment and other is used by the \make to dissolve the contract after it has timed out. \ew is summerized in Protocol~\ref{alg:lab}. The constructor for both \fifty and \ew establishes the core components of the contract:
 
 \begin{compactlist}
 \item \take: \texttt{msg.sender} for the contract creation.
@@ -72,30 +70,38 @@ As \ew is a modification of \fifty, we will discuss the design of both in parall
 \item Timeout: a validity period passed into the constructor. The contract also stores the block timestamp of when the constructor was run. These values are added together and when they exceed any future block timestamp, the self-destruct function is permitted to run allowing the \make a refund.
 \end{compactlist}
 
-Note that as implemented, the timeout functionality is timestamp dependent which could enable the \make to refund earlier than allowed, or alternatively be locked out from refunding, as a result of miner manipulation of the timestamps. This is feasible for adjustments of approximately 900 seconds. Therefore, the contract timeout should be considered `fuzzy' and should be sufficient when run over the course of hours, days, or years; which is standard for proposed use cases of payment channels. 
+Note that as implemented, the timeout functionality in both is timestamp dependent which could enable the \make to refund earlier than allowed, or alternatively be locked out from refunding, as a result of miner manipulation of the timestamps. This is feasible for adjustments of approximately 900 seconds. Therefore, the contract timeout should be considered `fuzzy' and should be sufficient when run over the course of hours, days, or years; which is standard for proposed use cases of payment channels. 
 
-For \ew specifically, the constructor also establishes the payword tip and the amount of Ether each payword is worth. 
+For \ew specifically (not \fifty), the constructor also establishes the payword tip and the amount of Ether each payword is worth. Consider a contract that holds 1.00 \eth in escrow and the \take supplies proof that they are entitled to, say, 0.45 of the 1.00 ETH by invoking this function. For \fifty, the proof is the claimed amount as signed by \make and the contract validates the signature. For \ew, it is a payword (\ie the output of a hash function). In this case, the \make might make a hash-chain of length 100, construct the contract with the tip, specify the value of each hash as 0.01 \eth, and funds the contract with 1.00 \eth. 
 
-\paragraph{CloseChannel}
+Note that the contract does not care about the length of the hash chain because there is no simple way (nor reason) for the \take to actually verify the length of the hash-chain. If it is too short, then \make cannot make payments after a certain point. If it is longer, than \take needs to stop accepting payments in excess of what she has verified to the contract to hold. Similarly, since the length of the hashchain is unknown to \take, the contract does not require a specific amount to be funded. The \take will just treat this amount as the maximum. 
 
-Consider a contract that holds 1.00 ETH is escrow, the \take supplies evidence that they are entitled to, say, 0.45 of the 1.00 ETH by invoking this function. For \fifty, the evidence is the amount they can claim as signed by \make and the contract validates the signature. For \ew, it is the output of a hash function.
+%The amount of \eth held by the contract can be increased after opening, through the default function, but this requires one on-blockchain transaction and also requires the \take to reference the blockchain to see the increase. Thus, if increases are used too often, it becomes more economical to simply send \eth directly with Ethereum's built-in payment system than using \ew.
 
-For example, the \make might make a hash-chain of length 100, opens the channel with the tip, specifies the value of each hash as 0.01 \eth, and funds the contract with 1 \eth. Note that the contract does not care about the length of the hash chain because there is no simple way (nor reason) for the \take to actually verify the length of the hash-chain. If it is too short, then \make cannot make payments after a certain point. If it is longer, than \take needs to stop accepting payments in excess\footnote{ride} of what she has verified to the contract to hold. Similarly, since the length of the hashchain is unknown to \take, the contract does not require a specific amount to be funded. The \take will just treat this amount as the maximum. The amount of \eth held by the contract can be increased after opening, through the default function, but this requires one on-blockchain transaction and also requires the \take to reference the blockchain to see the increase. Thus, if increases are used too often, it becomes more economical to simply send \eth directly with Ethereum's built-in payment system than using \ew.
+The \make can make an offline payment to the \take by sending a hash (again see Protocol~\ref{alg:lab}). Note that the hash is in no way bound to the identity of the \take---the smart contract binds the use of the hash to the \take. Next, note that technically the \take can compute the chain and submit any hash from this chain to \texttt{claim()}, however they are incentivized to send the most valuable hash. For this same reason, the \make can then later `up the payment' by sending a more valuable hash to the \take. This can be repeated until the \make runs out of hashes or \take wants to run \texttt{claim()}. This is called \textit{replace-by-incentive}~\cite{MMSH16} in the payment channel literature.
 
-The \make can make an offline payment to the \take by sending a hash (again see Protocol~\ref{alg:lab}). Note that the hash is in no way bound to the identity of the \take---the smart contract binds the use of the hash to the \take. Next, note that technically the \take can compute the chain and submit any hash from this chain to \texttt{claim()}, however they are incentivized to send the most valuable hash. For this same reason, the \make can then later `up the payment' by sending a more valuable hash to the \take. This can be repeated until the \make runs out of hashes or \take wants to run \texttt{claim()}. This is called \textit{replace-by-incentive}~\cite{MMSH16} in the payment channel literature (see next section).
-
-\paragraph{Timeout}
-
-
-
+\begin{table}[t]          
+\centering
+%\begin{tabular}{ l | r | r | r }
+%Function & Gas & ETH & USD \\ \hline
+%Constructor 		&328\,637  	& 0.00433 	& \$0.908 \\
+%Open 			&126\,180 		& 0.00166 	& \$0.349 \\ 
+%Claim (50) 		&21\,511  	& 0.00028 	& \$0.059 \\
+%Claim (100) 		&25\,772  	& 0.00034 	& \$0.071 \\ 
+%\end{tabular}
+\begin{tabular}{ l | r | r | r }
+\ew Function & Gas & ETH & USD \\ \hline
+Channel 		&312\,031 & 0.00539 	& \$0.689 \\
+closeChannel (50) 		&18\,905  	& 0.00033 	& \$0.042 \\
+closeChannel (100) 		&22\,205  	& 0.00038 	& \$0.049 \\ 
+\end{tabular}
+\setlength{\belowcaptionskip}{-5pt}
+\caption{Function cost. Since claim is dependent on how long the hash chain is for the claimed payment, we shows costs for length 50 and length 100.\label{table:gas}}
+\end{table}
 
 \subsection{Forming payment networks} 
 
 Consider a third party, in addition to the \make and the \take, called an intermediary. If \make establishes an \ew channel with the intermediary and the intermediary establishes an \ew channel with \take, and both channels use the same tip, then payments can be routed through the intermediary without trusting it. This requires one small modification: \take can run \texttt{claim()} in both contracts. It can also admit further modifications: for example, the intermediary might modify \texttt{claim()} so that it keeps some fraction of the total payout as a fee.
-
-\subsection{Porting to Bitcoin}
-
-Bitcoin's scripting language is purposely limited compared to Ethereum to ensure Bitcoin scripts execute efficiently and are generally related to Bitcoin's core functionality of digital money. Many of the components of \pw are present in Bitcoin script, including but not limited to locking transactions with a hash image that requires a pre-image to spend; and the ability to iteratively hash elements. However it does either looping nor any enforcement on how an output can be split---\ie once an unspent output evaluates to true, it can be spent any way specified. Therefore PayWord appears to require a moderate extension to Bitcoin's scripting language for implementation; one proposal such is MicroBTC~\cite{Wan18}.
 
 % = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 % = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
@@ -112,27 +118,7 @@ Bitcoin's scripting language is purposely limited compared to Ethereum to ensure
 %\caption{Comparison of code complexity and size of offline payments. Notes: (1) we modernized \textsf{Pay50} slightly; (2) both implementations comply with linter SolHint; (3) simple lines of code (SLOC) calculated by GitHub.\label{table:loc}}
 %\end{table}
 
-\textbf{Footprint.} \ew does not add to the lines of code; in fact, it even shaves a few off. The more important property is the size of the payment sent to the receiver; this is reduced from a digital signature to a hash or from 776 bits to 264 bits. Note that it is even possible to reduce \eww to 256-bits; an extra 8 bit value representing the length of the hash from the tip is included for a more convenient loop.
-
-
-\begin{table}[t]          
-\centering
-%\begin{tabular}{ l | r | r | r }
-%Function & Gas & ETH & USD \\ \hline
-%Constructor 		&328\,637  	& 0.00433 	& \$0.908 \\
-%Open 			&126\,180 		& 0.00166 	& \$0.349 \\ 
-%Claim (50) 		&21\,511  	& 0.00028 	& \$0.059 \\
-%Claim (100) 		&25\,772  	& 0.00034 	& \$0.071 \\ 
-%\end{tabular}
-\begin{tabular}{ l | r | r | r }
-Function & Gas & ETH & USD \\ \hline
-Channel 		&312\,031 & 0.00539 	& \$0.689 \\
-closeChannel (50) 		&18\,905  	& 0.00033 	& \$0.042 \\
-closeChannel (100) 		&22\,205  	& 0.00038 	& \$0.049 \\ 
-\end{tabular}
-\setlength{\belowcaptionskip}{-5pt}
-\caption{\textblue{To Do: change for \eww} Cost of running the basic contract functions. Since claim is dependent on how long the hash chain is for the claimed payment, the function shows costs for length 50 and length 100. See Figure~\ref{fig:gas} for more on this.\label{table:gas}}
-\end{table}
+\textbf{Footprint.} Relative to \fifty, \ew does not add to the lines of code; in fact, it even shaves a few off. The more important property is the size of the payment sent to the receiver; this is reduced from a digital signature to a hash or from 776 bits to 264 bits. Note that it is even possible to reduce \eww to 256-bits; an extra 8 bit value representing the length of the hash from the tip is included for a more convenient loop.
 
 \begin{figure}[t]
 \centering
@@ -140,27 +126,34 @@ closeChannel (100) 		&22\,205  	& 0.00038 	& \$0.049 \\
 \includegraphics[width=0.6\linewidth]{figures/gas.pdf}
 %\caption{The gas cost of the claim function as a function of the length of the hash chain. The gas cost of a claim in \textsf{Pay50} is around \textblue{42\,000}.\label{fig:gas}}
 \setlength{\belowcaptionskip}{-10pt}
-\caption{The total gas cost (\textblue{confirm:} construction, open, and claim) of running the payment channels \ew, \textsf{Pay50}, and the internal Ethereum Ether Transfer as a function of the number of payments. The gas cost of \textsf{Pay50} is around 460\,000.\label{fig:gas}}
+\caption{The total gas cost of running the payment channels \ew, \textsf{Pay50}, and the internal Ether Transfer as a function of the number of payments. Internal transfers are most economical up to 16 transactions, then \ew is most economical, and we extrapolate that \fifty (at a gas cost of around 460\,000) will only become more economical when the transactions exceed 1700.\label{fig:gas}}
 	
 \end{figure}
 
-\textbf{Gas Costs.} As of \textblue{January 15th, 2019}, the weighted average price of 1 gas is $\textblue{17.26}\times10^{-9}$~ETH\footnote{https://ethgasstation.info/} and the exchange rate of 1 ETH to USD is \$\textblue{127.85}.\footnote{https://coinmarketcap.com/} We show the gas costs of each function in \ew if run successfully. The cost of the claim function includes checking if the provided payment (hash) is part of the hash chain (if when iteratively hashed, it results in the tip value). Thus the cost of claiming will vary on how many times the hash must be iterated. For example, consider a channel with 100 payment values worth \$1 each. Running claim on the payment value representing \$5 will require hashing the value 5 times. The payment value of \$95 will require 95 hashes and thus cost more. 
+\textbf{Gas Costs.} As of January 15th, 2019, the weighted average price of 1 gas is $17.26\times10^{-9}$~ETH\footnote{https://ethgasstation.info/} and the exchange rate of 1 ETH to USD is \$127.85.\footnote{https://coinmarketcap.com/} Table~\ref{table:gas} shows the gas costs of each function in \ew if run successfully. The cost of the claim function includes checking if the provided payment (hash) is part of the hash chain (if when iteratively hashed, it results in the tip value). Thus the cost of claiming will vary on how many times the hash must be iterated. For example, consider a channel with 100 payment values worth 0.01 \eth each. Running claim on the payment value representing 0.05 \eth will require hashing the value 5 times. The payment value of 0.95 \eth will require 95 hashes. 
 
 %In Figure~\ref{fig:gas}, we show the gas cost of the claim function as the number as the length of the chain varies from 1 to 100. At 100, the cost is 25\,772 which is still about half the cost of running a claim function that must verify a digital signature (\eg \textsf{Pay50} uses the \texttt{ecrecover} operation in Solidity with some additional processing logic).
-In Figure~\ref{fig:gas}, we show the total gas cost of running the payment channels \ew, \eww, \textsf{Pay50}, and the internal Ethereum Ether Transfer as a function of the number of payments varies from 1 to 100. At 100, the cost by \eww is 334\,236 which is still about 30\% less than the cost of running \textsf{Pay50} that must verify a digital signature (\eg \textsf{Pay50} uses the \texttt{ecrecover} operation in Solidity with some additional processing logic).
+Figure~\ref{fig:gas} shows the total gas cost of running the payment channels \ew, \textsf{Pay50}, and the internal  ether transfer as a function of the number of payments (from 1 to 100). At 100, the cost by \eww is 334\,236 which is still about 30\% less than the cost of running \textsf{Pay50} that must verify a digital signature (\ie \textsf{Pay50} uses Solidity's \texttt{ecrecover} with some additional processing logic).
 
-\textbf{Contract Security.} In \ew, the contract is capable of paying out the \eth it holds, requiring a transfer function like \texttt{send()}. Transfer functions introduce the possibility of a reentrancy attack, particularly when the payment is intended to be less than the capacity of the channel---\eg an attack in this case might extract double, triple, etc. We implement a state machine to enforce that functions are executed in the correct order and this includes transitioning from an open state (required to enter the function) to a locked state that will encapsulate the transfer and is not a valid state for any function. This is in addition to using \texttt{send()}, which offers little gas to the contract receiving the funds. %We analyze the contract with the static analysis tool Oyente~\cite{LCOSH16} to help confirm its security against reentrancy attacks. 
+\textbf{Contract Security.} As mentioned above, the contract depends on manipulatable timestamps for allowing a refund after an elapsed time. This is not a problem but requires the \take to be aware. Further, once the contract is refundable, the \take can still close the contract and receive payment assuming they have a payment proof. If \take and \make try to close the contract at the same time, transaction ordering will be arbitrary, subject to a gas auction, and subject to miner manipulation. Once again, we do not consider this a problem as long as the \take is aware. Before the timeout, they have exclusive control over closing the contract. 
+
+Last, consider a case where the \take is given a payment of 0.45 \eth from a contract holding 1.00 \eth. After receiving the 0.45 \eth at the address of the \take (call it T), note that T may be a contract address and if so, it's fallback function will be allowed to run. Logically, this function could recall close and result in an addition 0.45 \eth --- a reentrancy attack. The mitigation is the standard one: using \texttt{send} which does provide enough gas to  T's fallback function to make an additional function call. 
+
+
+%In \ew, the contract is capable of paying out the \eth it holds, requiring a transfer function like \texttt{send()}. Transfer functions introduce the possibility of a reentrancy attack, particularly when the payment is intended to be less than the capacity of the channel---\eg an attack in this case might extract double, triple, etc. We implement a state machine to enforce that functions are executed in the correct order and this includes transitioning from an open state (required to enter the function) to a locked state that will encapsulate the transfer and is not a valid state for any function. This is in addition to using \texttt{send()}, which offers little gas to the contract receiving the funds. %We analyze the contract with the static analysis tool Oyente~\cite{LCOSH16} to help confirm its security against reentrancy attacks. 
 
 %Oyente identifies a timestamp dependency since our timeout uses time (rather than block number). This would allow a malicious miner to increase or decrease the refund time by 15 minutes, which we accept. Oyente also identifies a transaction ordering dependency. \textblue{Investigate why and either fix or explain why it doesn't matter.}
 
-We also do other small things to ensure proper execution: (1) we whitelist addresses who can run each function, and (2) we use assertions to check invariances. For example, we provide a function to extend the validity period. A simple mistake such as using a signed \texttt{int} to represent the extension would permit a negative extension, or even using an unsigned integer without a guarantee against the integer overflow attack. These mistakes enable \make to withdraw sooner than specified --- thus we assert that extensions also increase the validity period.
+%We also do other small things to ensure proper execution: (1) we whitelist addresses who can run each function, and (2) we use assertions to check invariances. For example, we provide a function to extend the validity period. A simple mistake such as using a signed \texttt{int} to represent the extension would permit a negative extension, or even using an unsigned integer without a guarantee against the integer overflow attack. These mistakes enable \make to withdraw sooner than specified --- thus we assert that extensions also increase the validity period.
 
 % = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 % = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
 \section{Discussion}
 
-\textbf{Micropayments.} With a total gas cost (to construct, open, and claim within a contract) of \$1.33 or more, \ew (or other Ethereum-based payment networks) are not suitable for true micropayments. Even to send \$100 of value, it represents a 1.33\% fee. \eww is slightly leaner than \ew but still costs 0.92\%. The simplest internal Ethereum transaction costs 21\,000 gas so \ew will have to replace ~20 transactions to pay for itself. 
+\textbf{Porting to Bitcoin.} Bitcoin's scripting language is purposely limited, compared to Ethereum, to ensure scripts execute efficiently and support Bitcoin's core functionality of digital money. Many \pw components are supported in Bitcoin script, including but not limited to locking transactions with a hash image that requires a pre-image to spend; and the ability to iteratively hash elements. However it does support looping nor dynamically changing how an output can be split. A moderate extension to Bitcoin's scripting language could enable \pw on Bitcoin; one proposal is MicroBTC~\cite{Wan18}.
+
+\textbf{Micropayments.} With a total gas cost (to construct, open, and claim within a contract) of \$0.75 or more, \ew (or other Ethereum-based payment networks) are not suitable for true micropayments. Even to send \$100 of value, it represents a 0.75\% fee. The simplest internal Ethereum transaction costs 21\,000 gas so \ew will have to replace 16 transactions to pay for itself. 
 
 \textbf{Prepaying.} A second limitation that underlies almost all payment channels is the fact that payments have to be \textit{prepaid}. Without some broader economic infrastructure, a payment channel or network is similar to using prepaid cards, something most customers choose to do with fiat currencies unless if they are  compensated (generally, customers pay for credit; preloading a card or account is giving the merchant credit which they should also pay for\footnote{For example, a \$50 Apple Store prepaid card might sell for \$40 or using a preloaded Starbucks app might result in rewards that can be redeemed for future purchases.}). If Alice were to pay all her bills for a single year using \ew (or other payment channel), she would have to have enough Ether for an entire year on the first day of the year. More many people, this would be a cash flow issue. 
 
